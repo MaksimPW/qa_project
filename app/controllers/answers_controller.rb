@@ -2,7 +2,7 @@ class AnswersController < ApplicationController
   before_action :load_question
 
   def create
-    @answer = Answer.new(answer_params, question_id: @question)
+    @answer = @question.answers.new(answer_params)
     if @answer.save
       redirect_to question_path(@question)
     else
