@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :question do
-    title "MyString"
-    body "MyText"
+    title "MyQuestionMinimumLength"
+    body "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod"
   end
 end
