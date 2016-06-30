@@ -6,8 +6,7 @@ class AnswersController < ApplicationController
     if @answer.save
       redirect_to question_path(@question)
     else
-      redirect_to question_path(@question)
-      # TODO: Add render error message for invalid answer
+      render 'questions/show'
     end
   end
 

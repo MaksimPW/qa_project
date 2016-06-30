@@ -22,8 +22,7 @@ RSpec.describe AnswersController, type: :controller do
 
       it 'redirects to the Question show view' do
         post :create, question_id: question, answer: attributes_for(:invalid_answer)
-        expect(response).to redirect_to question_path(assigns(:question))
-        # TODO: Add render error message for invalid answer
+        expect(response).to render_template 'questions/show'
       end
     end
   end
