@@ -20,4 +20,18 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  questions:
+    create:
+      success: Question created successfully
+      fail: Create question failed
+    index:
+      create_question: Create question
+  activerecord:
+    attributes:
+      question:
+        title: ~
+        body: ~
+  helpers:
+    submit:
+      question:
+        create: "Create %{model}"

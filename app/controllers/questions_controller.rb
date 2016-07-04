@@ -15,9 +15,9 @@ class QuestionsController < ApplicationController
     @question = Question.new(question_params)
 
     if @question.save
-      redirect_to @question, notice: 'Question created successfully'
+      redirect_to @question, notice: t('.success')
     else
-      flash.now[:notice] = 'Create question failed'
+      flash.now[:notice] = t('.fail')
       render :new
     end
   end

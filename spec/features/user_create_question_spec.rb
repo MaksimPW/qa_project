@@ -11,7 +11,7 @@ feature 'User create question' do
     fill_in 'question_body', with: question.body
     click_button 'Create'
 
-    expect(page).to have_content 'Question created successfully'
+    expect(page).to have_content I18n.t('questions.create.success')
     expect(current_path).to match /\/questions\/\d+/
 
     expect(page).to have_content question.title
@@ -25,7 +25,7 @@ feature 'User create question' do
     fill_in 'question_body', with: invalid_question.body
     click_button 'Create'
 
-    expect(page).to have_content 'Create question failed'
+    expect(page).to have_content I18n.t('questions.create.fail')
     expect(current_path).to eq questions_path
   end
 end
