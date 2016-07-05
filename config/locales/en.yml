@@ -33,6 +33,7 @@ en:
       create_question: Create question
     show:
       new_answer: New answer
+      answers_list: Answers
   activerecord:
     attributes:
       question:

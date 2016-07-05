@@ -2,7 +2,10 @@
 br
 = @question.body
 br
-
+p = t('.answers_list')
+- @question.answers.each do |a|
+  p
+    = a.body
 p = t('.new_answer')
 = form_for [@question, @answer] do |f|
   = f.label :body
