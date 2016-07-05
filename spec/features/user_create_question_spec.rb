@@ -1,17 +1,13 @@
 require 'rails_helper'
 
 feature 'User create question' do
-  given(:question) { FactoryGirl.create(:question) }
-  given(:invalid_question) { FactoryGirl.build(:invalid_question) }
-  given(:user) { FactoryGirl.build(:user) }
+  given(:question) { create(:question) }
+  given(:invalid_question) { build(:invalid_question) }
+  given(:user) { create(:user) }
 
   context 'Authenticated user create question' do
     before do
-      User.create!(email: user.email, password: user.password)
-      visit new_user_session_path
-      fill_in 'user_email', with: user.email
-      fill_in 'user_password', with: user.password
-      click_button 'Log in'
+      sign_in(user)
       click_on 'Create question'
     end
 

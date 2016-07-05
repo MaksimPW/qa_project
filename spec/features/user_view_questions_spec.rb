@@ -22,6 +22,5 @@ feature 'User can view' do
     answers.each do |a|
       expect(page).to have_content answer.body
     end
-
   end
 end
