@@ -6,8 +6,9 @@ p = t('.answers_list')
 - @question.answers.each do |a|
   p
     = a.body
-p = t('.new_answer')
-= form_for [@question, @answer] do |f|
-  = f.label :body
-  = f.text_area :body
-  = f.submit
+- if user_signed_in?
+  p = t('.new_answer')
+  = form_for [@question, @answer] do |f|
+    = f.label :body
+    = f.text_area :body
+    = f.submit
