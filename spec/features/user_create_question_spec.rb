@@ -1,31 +1,46 @@
 require 'rails_helper'
 
 feature 'User create question' do
-  let(:question) { FactoryGirl.create(:question) }
-  let(:invalid_question) { FactoryGirl.build(:invalid_question) }
+  given(:question) { FactoryGirl.create(:question) }
+  given(:invalid_question) { FactoryGirl.build(:invalid_question) }
+  given(:user) { FactoryGirl.build(:user) }
 
-  scenario 'User create valid question' do
-    visit root_path
-    click_on 'Create question'
-    fill_in 'question_title', with: question.title
-    fill_in 'question_body', with: question.body
-    click_button 'Create'
+  context 'Authenticated user create question' do
+    before do
+      User.create!(email: user.email, password: user.password)
+      visit new_user_session_path
+      fill_in 'user_email', with: user.email
+      fill_in 'user_password', with: user.password
+      click_button 'Log in'
+      click_on 'Create question'
+    end
 
-    expect(page).to have_content I18n.t('questions.create.success')
-    expect(current_path).to match /\/questions\/\d+/
+    scenario 'with valid attributes' do
+      fill_in 'question_title', with: question.title
+      fill_in 'question_body', with: question.body
+      click_button 'Create'
 
-    expect(page).to have_content question.title
-    expect(page).to have_content question.body
+      expect(page).to have_content I18n.t('questions.create.success')
+      expect(current_path).to match /\/questions\/\d+/
+
+      expect(page).to have_content question.title
+      expect(page).to have_content question.body
+    end
+
+    scenario 'with invalid attributes' do
+      fill_in 'question_title', with: invalid_question.title
+      fill_in 'question_body', with: invalid_question.body
+      click_button 'Create'
+
+      expect(page).to have_content I18n.t('questions.create.fail')
+      expect(current_path).to eq questions_path
+    end
   end
 
-  scenario 'User create invalid question' do
+  scenario 'Non-authenticated user create question' do
     visit root_path
     click_on 'Create question'
-    fill_in 'question_title', with: invalid_question.title
-    fill_in 'question_body', with: invalid_question.body
-    click_button 'Create'
 
-    expect(page).to have_content I18n.t('questions.create.fail')
-    expect(current_path).to eq questions_path
+    expect(page).to have_content I18n.t('devise.failure.unauthenticated')
   end
 end
