@@ -31,6 +31,8 @@ en:
     index:
       h1: Listing questions
       create_question: Create question
+    delete:
+      success: Question was successfully destroyed
     show:
       new_answer: New answer
       answers_list: Answers

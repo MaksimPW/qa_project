@@ -67,4 +67,37 @@ RSpec.describe QuestionsController, type: :controller do
       end
     end
   end
+
+  describe 'DELETE #destroy' do
+    sign_in_user
+
+    let(:question) { create(:question, user: @user) }
+
+    context 'Author deletes own question' do
+      it 'deletes question' do
+        question
+        expect { delete :destroy, id: question }.to change(@user.questions, :count).by(-1)
+      end
+
+      it 'redirects to index view' do
+        delete :destroy, id: question
+        expect(response).to redirect_to questions_path
+      end
+    end
+
+    context 'Author can\`t deletes another author question' do
+      let(:another_user) { create(:user) }
+      let(:another_question) { create(:question, user: another_user) }
+
+      it 'does not deletes another question' do
+        another_question
+        expect { delete :destroy, id: another_question }.to_not change(Question, :count)
+      end
+
+      it 'redirects to current question' do
+        delete :destroy, id: another_question
+        expect(response).to redirect_to question_path(assigns(:question))
+      end
+    end
+  end
 end
