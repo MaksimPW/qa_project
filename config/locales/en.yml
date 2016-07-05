@@ -20,6 +20,10 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
+  answers:
+    create:
+      success: Answer created successfully
+      fail: Create answer failed
   questions:
     create:
       success: Question created successfully
@@ -27,6 +31,8 @@ en:
     index:
       h1: Listing questions
       create_question: Create question
+    show:
+      new_answer: New answer
   activerecord:
     attributes:
       question:

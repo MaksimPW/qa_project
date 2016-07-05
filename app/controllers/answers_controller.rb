@@ -4,8 +4,9 @@ class AnswersController < ApplicationController
   def create
     @answer = @question.answers.new(answer_params)
     if @answer.save
-      redirect_to question_path(@question)
+      redirect_to question_path(@question), notice: t('.success')
     else
+      flash.now[:notice] = t('.fail')
       render 'questions/show'
     end
   end

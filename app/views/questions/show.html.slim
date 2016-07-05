@@ -1,3 +1,10 @@
 = @question.title
 br
 = @question.body
+br
+
+p = t('.new_answer')
+= form_for [@question, @answer] do |f|
+  = f.label :body
+  = f.text_area :body
+  = f.submit
