@@ -25,6 +25,7 @@ en:
       success: Question created successfully
       fail: Create question failed
     index:
+      h1: Listing questions
       create_question: Create question
   activerecord:
     attributes:
