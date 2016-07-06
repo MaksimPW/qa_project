@@ -7,8 +7,13 @@ br
 
 p = t('.answers_list')
 - @question.answers.each do |a|
-  p
-    = a.body
+  - if a.valid?
+    div id="answer_#{a.id}"
+      p
+        = a.body
+      - if user_signed_in? && current_user == a.user
+        = link_to 'Delete answer', question_answer_path(@question, a), method: :delete
+
 - if user_signed_in?
   p = t('.new_answer')
   = form_for [@question, @answer] do |f|

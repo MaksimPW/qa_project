@@ -27,4 +27,36 @@ RSpec.describe AnswersController, type: :controller do
       end
     end
   end
+
+  describe 'DELETE #destroy' do
+    sign_in_user
+
+    let(:question) { create(:question, user: create(:user)) }
+    let(:answer) { create(:answer, user: @user, question: question) }
+    let(:another_answer) { create(:answer, user: create(:user), question: question) }
+
+    context 'Author deletes own answer' do
+      it 'deletes answer' do
+        answer
+        expect { delete :destroy, id: answer, question_id: question }.to change(Answer, :count).by(-1)
+      end
+
+      it 'redirect to current question' do
+        delete :destroy, id: answer, question_id: question
+        expect(response).to redirect_to question_path(assigns(:question))
+      end
+    end
+
+    context 'Author can`t deletes another answer' do
+      it 'does not deletes another answer' do
+        another_answer
+        expect { delete :destroy, id: another_answer, question_id: question }.to_not change(Answer, :count)
+      end
+
+      it 'rendirect to current question' do
+        delete :destroy, id: another_answer, question_id: question
+        expect(response).to redirect_to question_path(assigns(:question))
+      end
+    end
+  end
 end

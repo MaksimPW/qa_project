@@ -24,6 +24,8 @@ en:
     create:
       success: Answer created successfully
       fail: Create answer failed
+    delete:
+      success: Answer was successfully destroyed
   questions:
     create:
       success: Question created successfully
