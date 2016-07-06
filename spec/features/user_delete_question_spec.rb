@@ -11,7 +11,7 @@ feature 'User delete question' do
     visit question_path(question)
     click_on 'Delete'
 
-    expect(page).to eq questions_path
+    expect(current_path).to eq questions_path
     expect(page).to_not have_content question.title
     expect(page).to have_content I18n.t('questions.delete.success')
   end

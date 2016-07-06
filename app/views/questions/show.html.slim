@@ -2,6 +2,9 @@
 br
 = @question.body
 br
+- if current_user == @question.user
+  = link_to 'Delete', @question, method: :delete
+
 p = t('.answers_list')
 - @question.answers.each do |a|
   p

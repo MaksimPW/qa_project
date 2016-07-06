@@ -94,9 +94,9 @@ RSpec.describe QuestionsController, type: :controller do
         expect { delete :destroy, id: another_question }.to_not change(Question, :count)
       end
 
-      it 'redirects to current question' do
+      it 're-renders current question' do
         delete :destroy, id: another_question
-        expect(response).to redirect_to question_path(assigns(:question))
+        expect(response).to render_template :show
       end
     end
   end
