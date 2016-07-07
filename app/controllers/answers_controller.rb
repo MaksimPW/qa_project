@@ -16,9 +16,7 @@ class AnswersController < ApplicationController
   def destroy
     @answer = Answer.find(params[:id])
     if current_user == @answer.user
-      if @answer.destroy
-        notice = t('answers.delete.success')
-      end
+      notice = t('answers.delete.success') if @answer.destroy
     end
     redirect_to question_path(@question), notice: notice
   end

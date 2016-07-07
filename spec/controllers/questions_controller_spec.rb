@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe QuestionsController, type: :controller do
   describe 'GET #index' do
-    let(:questions) { create_list(:question, 2) }
+    let(:questions) { create_list(:question, 2)}
 
     before { get :index }
 
@@ -47,7 +47,7 @@ RSpec.describe QuestionsController, type: :controller do
 
     context 'with valid attributes' do
       it 'saves the new question in the database' do
-        expect { post :create, question: attributes_for(:question) }.to change(Question, :count).by(1)
+        expect { post :create, question: attributes_for(:question) }.to change(@user.questions, :count).by(1)
       end
 
       it 'redirects to show view' do
@@ -86,8 +86,7 @@ RSpec.describe QuestionsController, type: :controller do
     end
 
     context 'Author can\`t deletes another author question' do
-      let(:another_user) { create(:user) }
-      let(:another_question) { create(:question, user: another_user) }
+      let(:another_question) { create(:question) }
 
       it 'does not deletes another question' do
         another_question

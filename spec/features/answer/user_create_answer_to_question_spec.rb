@@ -2,7 +2,6 @@ require 'rails_helper'
 
 feature 'User create answer' do
   given(:answer) { build(:answer) }
-  given(:invalid_answer) { build(:invalid_answer) }
   given(:user) { create(:user) }
   given(:question) { create(:question) }
 
@@ -22,7 +21,6 @@ feature 'User create answer' do
     end
 
     scenario 'with invalid attributes' do
-      fill_in 'answer_body', with: invalid_answer.body
       click_button 'Create'
 
       expect(page).to have_content I18n.t('answers.create.fail')

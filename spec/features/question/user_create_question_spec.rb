@@ -2,7 +2,6 @@ require 'rails_helper'
 
 feature 'User create question' do
   given(:question) { create(:question) }
-  given(:invalid_question) { build(:invalid_question) }
   given(:user) { create(:user) }
 
   context 'Authenticated user create question' do
@@ -24,8 +23,6 @@ feature 'User create question' do
     end
 
     scenario 'with invalid attributes' do
-      fill_in 'question_title', with: invalid_question.title
-      fill_in 'question_body', with: invalid_question.body
       click_button 'Create'
 
       expect(page).to have_content I18n.t('questions.create.fail')

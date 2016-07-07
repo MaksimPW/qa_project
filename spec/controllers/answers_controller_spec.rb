@@ -32,9 +32,9 @@ RSpec.describe AnswersController, type: :controller do
   describe 'DELETE #destroy' do
     sign_in_user
 
-    let(:question) { create(:question, user: create(:user)) }
+    let(:question) { create(:question) }
     let(:answer) { create(:answer, user: @user, question: question) }
-    let(:another_answer) { create(:answer, user: create(:user), question: question) }
+    let(:another_answer) { create(:answer, question: question) }
 
     context 'Author deletes own answer' do
       it 'deletes answer' do

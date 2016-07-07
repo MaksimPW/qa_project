@@ -3,7 +3,7 @@ require 'rails_helper'
 feature 'User delete question' do
   given(:user) { create(:user) }
   given(:question) { create(:question, user: user) }
-  given(:other_question) { create(:question, user: create(:user)) }
+  given(:other_question) { create(:question) }
 
   scenario 'Author deletes own question' do
     sign_in(user)
@@ -16,7 +16,7 @@ feature 'User delete question' do
     expect(page).to have_content I18n.t('questions.delete.success')
   end
 
-  scenario 'Author can\`t deletes another author question' do
+  scenario 'Author can`t deletes another author question' do
     sign_in(user)
 
     visit question_path(other_question)

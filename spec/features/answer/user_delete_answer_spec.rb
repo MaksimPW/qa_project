@@ -27,6 +27,7 @@ feature 'User delete answer' do
     sign_in(user)
 
     visit question_path(question)
+    expect(page).to have_content answer.body
     expect(page).to_not have_link('Delete answer', href: "/questions/#{question.id}/answers/#{other_answer.id}")
   end
 end
