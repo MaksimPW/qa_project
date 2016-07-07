@@ -55,7 +55,7 @@ RSpec.describe AnswersController, type: :controller do
         expect { delete :destroy, id: another_answer, question_id: question }.to_not change(Answer, :count)
       end
 
-      it 'rendirect to current question' do
+      it 'redirect to current question' do
         delete :destroy, id: another_answer, question_id: question
         expect(response).to redirect_to question_path(assigns(:question))
       end
