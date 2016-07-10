@@ -1,7 +1,13 @@
 FactoryGirl.define do
-  factory :answer do
-    body "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod"
+  sequence :body do |n|
+    "Valid Answer №#{n} : But I must explain to you how all this mistaken idea of"
   end
+
+  factory :answer do
+    body
+    user
+  end
+
   factory :invalid_answer, class: "Answer" do
     body "Invalid"
   end

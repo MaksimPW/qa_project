@@ -20,4 +20,30 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  answers:
+    create:
+      success: Answer created successfully
+      fail: Create answer failed
+    delete:
+      success: Answer was successfully destroyed
+  questions:
+    create:
+      success: Question created successfully
+      fail: Create question failed
+    index:
+      h1: Listing questions
+      create_question: Create question
+    delete:
+      success: Question was successfully destroyed
+    show:
+      new_answer: New answer
+      answers_list: Answers
+  activerecord:
+    attributes:
+      question:
+        title: ~
+        body: ~
+  helpers:
+    submit:
+      question:
+        create: "Create %{model}"
