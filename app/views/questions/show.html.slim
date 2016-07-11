@@ -4,19 +4,12 @@ br
 br
 - if user_signed_in? && current_user.author_of?(@question)
   = link_to 'Delete', @question, method: :delete
-
-p = t('.answers_list')
-- @question.answers.each do |a|
-  - if a.valid?
-    div id="answer_#{a.id}"
-      p
-        = a.body
-      - if user_signed_in? && current_user.author_of?(a)
-        = link_to 'Delete answer', question_answer_path(@question, a), method: :delete
+.answers
+  = render 'questions/answers'
 
 - if user_signed_in?
   p = t('.new_answer')
-  = form_for [@question, @answer] do |f|
+  = form_for [@question, @answer], remote: true do |f|
     = f.label :body
     = f.text_area :body
     = f.submit

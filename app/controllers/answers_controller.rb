@@ -6,10 +6,9 @@ class AnswersController < ApplicationController
     @answer = @question.answers.new(answer_params)
     @answer.user = current_user
     if @answer.save
-      redirect_to question_path(@question), notice: t('.success')
+      flash.now[:notice] = t('.success')
     else
       flash.now[:notice] = t('.fail')
-      render 'questions/show'
     end
   end
 

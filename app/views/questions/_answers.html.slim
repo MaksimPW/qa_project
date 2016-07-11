@@ -1,0 +1,8 @@
+p = t('.answers_list')
+- @question.answers.each do |a|
+  - if a.valid?
+    div id="answer_#{a.id}"
+      p
+        = a.body
+      - if user_signed_in? && current_user.author_of?(a)
+        = link_to 'Delete answer', question_answer_path(@question, a), method: :delete

@@ -3,7 +3,7 @@ require 'rails_helper'
 feature 'User create answer' do
   given(:answer) { build(:answer) }
   given(:user) { create(:user) }
-  given(:question) { create(:question) }
+  given!(:question) { create(:question) }
 
   context 'Authenticated user create answer' do
     before do
@@ -11,7 +11,7 @@ feature 'User create answer' do
       visit question_path(question)
     end
 
-    scenario 'with valid attributes' do
+    scenario 'with valid attributes', js: true do
       fill_in 'answer_body', with: answer.body
       click_button 'Create'
 
@@ -20,7 +20,7 @@ feature 'User create answer' do
       expect(page).to have_content answer.body
     end
 
-    scenario 'with invalid attributes' do
+    scenario 'with invalid attributes', js: true do
       click_button 'Create'
 
       expect(page).to have_content I18n.t('answers.create.fail')
