@@ -5,7 +5,8 @@ br
 - if user_signed_in? && current_user.author_of?(@question)
   = link_to 'Delete', @question, method: :delete
 .answers
-  = render 'questions/answers'
+  p = t('.answers_list')
+  = render @question.answers
 
 - if user_signed_in?
   p = t('.new_answer')
