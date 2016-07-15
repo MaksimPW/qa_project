@@ -8,4 +8,4 @@
         = f.label :body, 'Answer'
         = f.text_area :body
         = f.submit 'Update'
-      = link_to 'Delete answer', question_answer_path(@question, answer), method: :delete
+      = link_to 'Delete answer', question_answer_path(@question, answer), method: :delete, remote: true
