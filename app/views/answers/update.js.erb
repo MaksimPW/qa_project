@@ -1,2 +1,4 @@
-$('.answers').html('<%= j render @question.answers %>');
+<% unless @answer.errors.present? %>
+    $('#answer_<%= @answer.id %>').html('<%= j render @answer %>');
+<% end %>
 $('.notice').html('<%= j render 'layouts/notice' %>');
