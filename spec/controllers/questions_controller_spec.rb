@@ -68,6 +68,48 @@ RSpec.describe QuestionsController, type: :controller do
     end
   end
 
+  describe 'PATCH #update' do
+    sign_in_user
+
+    let(:question) { create(:question, user: @user) }
+    let(:updated_title) { question.title + 'updated' }
+    let(:updated_body) { question.body + 'updated' }
+    let(:another_question) { create(:question, user: create(:user)) }
+
+    context 'Author updates own question' do
+      it 'assigns the requested question to @question' do
+        patch :update, id: question, question: attributes_for(:question), format: :js
+        expect(assigns(:question)).to eq question
+      end
+
+      it 'changes question attributes' do
+        patch :update, id: question, question: { title: updated_title ,body: updated_body }, format: :js
+        question.reload
+        expect(question.title).to eq updated_title
+        expect(question.body).to eq updated_body
+      end
+
+      it 'render update template' do
+        patch :update, id: question, question: { title: updated_title, body: updated_body }, format: :js
+        expect(response).to render_template :update
+      end
+    end
+
+    context 'Author can`t deletes another author question' do
+      it 'does not updates another question' do
+        patch :update, id: another_question, question: { title: updated_title ,body: updated_body }, format: :js
+        another_question.reload
+        expect(another_question.title).to_not eq updated_title
+        expect(another_question.body).to_not eq updated_body
+      end
+
+      it 'render update template' do
+        patch :update, id: another_question, question: { title: updated_title, body: updated_body }, format: :js
+        expect(response).to render_template :update
+      end
+    end
+  end
+
   describe 'DELETE #destroy' do
     sign_in_user
 

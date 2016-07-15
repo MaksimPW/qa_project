@@ -1,6 +1,6 @@
 class QuestionsController < ApplicationController
-  before_action :authenticate_user!, only: [:new, :create]
-  before_action :load_question, only: [:show, :destroy]
+  before_action :authenticate_user!, only: [:new, :create, :update]
+  before_action :load_question, only: [:show, :destroy, :update]
 
   def index
     @questions = Question.all
@@ -22,6 +22,18 @@ class QuestionsController < ApplicationController
     else
       flash.now[:notice] = t('.fail')
       render :new
+    end
+  end
+
+  def update
+    if current_user.author_of?(@question)
+      if @question.update(question_params)
+        flash[:notice] = t('.success')
+      else
+        flash[:notice] = t('.fail')
+      end
+    else
+      flash[:notice] = t('.fail')
     end
   end
 

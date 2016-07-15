@@ -1,7 +1,11 @@
 FactoryGirl.define do
-  factory :question do
-    title "MyQuestionMinimumLength"
-    body "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod"
+  sequence :title do |n|
+    "MyQuestion№#{n}MinimumLength"
+  end
+
+  factory :question do |q|
+    title
+    q.sequence(:body) { |n| "Lorem ipsum dolors №#{n} sit amet, consectetur adipisicing elit, sed do eiusmod" }
     user
   end
 

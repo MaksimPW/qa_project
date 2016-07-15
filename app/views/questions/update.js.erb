@@ -1,0 +1,4 @@
+<% unless @question.errors.present? %>
+    $('.question').html('<%= j render @question %>');
+<% end %>
+$('.notice').html('<%= j render 'layouts/notice' %>');

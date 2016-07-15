@@ -33,6 +33,9 @@ en:
     create:
       success: Question created successfully
       fail: Create question failed
+    update:
+      success: Question was successfully updated
+      fail: Question answer failed
     index:
       h1: Listing questions
       create_question: Create question
