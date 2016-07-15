@@ -39,26 +39,42 @@ RSpec.describe AnswersController, type: :controller do
     let!(:question) { create (:question) }
     let(:answer) { create(:answer, user: @user, question: question) }
     let(:answer_updated_body) { answer.body + 'updated' }
+    let(:another_answer) { create(:answer, question: question) }
 
-    it 'assigns the requested answer to @answer' do
-      patch :update, id: answer, question_id: question, answer: attributes_for(:answer), format: :js
-      expect(assigns(:answer)).to eq answer
+    context 'Author updates own answer' do
+      it 'assigns the requested answer to @answer' do
+        patch :update, id: answer, question_id: question, answer: attributes_for(:answer), format: :js
+        expect(assigns(:answer)).to eq answer
+      end
+
+      it 'assigns the question' do
+        patch :update, id: answer, question_id: question, answer: attributes_for(:answer), format: :js
+        expect(assigns(:question)).to eq question
+      end
+
+      it 'changes answer attributes' do
+        patch :update, id: answer, question_id: question, answer: { body: answer_updated_body }, format: :js
+        answer.reload
+        expect(answer.body).to eq answer_updated_body
+      end
+
+      it 'render update template' do
+        patch :update, id: answer, question_id: question, answer: { body: answer_updated_body }, format: :js
+        expect(response).to render_template :update
+      end
     end
 
-    it 'assigns the question' do
-      patch :update, id: answer, question_id: question, answer: attributes_for(:answer), format: :js
-      expect(assigns(:question)).to eq question
-    end
+    context 'Author can`t updates another answer' do
+      it 'does not updates another answer' do
+        patch :update, id: another_answer, question_id: question, answer: { body: answer_updated_body }, format: :js
+        another_answer.reload
+        expect(another_answer.body).to_not eq answer_updated_body
+      end
 
-    it 'changes answer attributes' do
-      patch :update, id: answer, question_id: question, answer: { body: answer_updated_body }, format: :js
-      answer.reload
-      expect(answer.body).to eq answer_updated_body
-    end
-
-    it 'render update template' do
-      patch :update, id: answer, question_id: question, answer: { body: answer_updated_body }, format: :js
-      expect(response).to render_template :update
+      it 'render update template' do
+        patch :update, id: another_answer, question_id: question, answer: { body: answer_updated_body }, format: :js
+        expect(response).to render_template :update
+      end
     end
   end
 
