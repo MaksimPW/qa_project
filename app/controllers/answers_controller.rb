@@ -12,6 +12,15 @@ class AnswersController < ApplicationController
     end
   end
 
+  def update
+    @answer = Answer.find(params[:id])
+    if @answer.update(answer_params)
+      flash.now[:notice] = t('.success')
+    else
+      flash.now[:notice] = t('.fail')
+    end
+  end
+
   def destroy
     @answer = Answer.find(params[:id])
     if current_user.author_of?(@answer)
