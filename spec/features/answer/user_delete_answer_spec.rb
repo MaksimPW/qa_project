@@ -1,4 +1,4 @@
-require 'rails_helper'
+require 'acceptance_helper'
 
 feature 'User delete answer' do
   given(:user) { create(:user) }

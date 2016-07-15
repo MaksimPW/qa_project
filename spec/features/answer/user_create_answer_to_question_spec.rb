@@ -1,4 +1,4 @@
-require 'rails_helper'
+require 'acceptance_helper'
 
 feature 'User create answer' do
   given(:answer) { build(:answer) }
