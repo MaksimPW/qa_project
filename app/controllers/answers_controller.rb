@@ -14,8 +14,12 @@ class AnswersController < ApplicationController
 
   def update
     @answer = Answer.find(params[:id])
-    if @answer.update(answer_params)
-      flash.now[:notice] = t('.success')
+    if current_user.author_of?(@answer)
+      if @answer.update(answer_params)
+        flash.now[:notice] = t('.success')
+      else
+        flash.now[:notice] = t('.fail')
+      end
     else
       flash.now[:notice] = t('.fail')
     end

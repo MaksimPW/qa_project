@@ -34,8 +34,10 @@ RSpec.describe AnswersController, type: :controller do
   end
 
   describe 'PATCH #update' do
+    sign_in_user
+
     let!(:question) { create (:question) }
-    let(:answer) { create(:answer, question: question) }
+    let(:answer) { create(:answer, user: @user, question: question) }
     let(:answer_updated_body) { answer.body + 'updated' }
 
     it 'assigns the requested answer to @answer' do
