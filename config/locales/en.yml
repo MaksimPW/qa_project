@@ -21,6 +21,9 @@
 
 en:
   answers:
+    answer:
+      edit: Edit answer
+      delete: Delete answer
     create:
       success: Answer created successfully
       fail: Create answer failed
@@ -30,6 +33,9 @@ en:
     delete:
       success: Answer was successfully destroyed
   questions:
+    question:
+      edit: Edit question
+      delete: Delete question
     create:
       success: Question created successfully
       fail: Create question failed
@@ -52,4 +58,8 @@ en:
   helpers:
     submit:
       question:
-        create: "Create %{model}"
+        create: "Create question"
+        update: "Save question"
+      answer:
+        create: "Create answer"
+        update: "Save answer"

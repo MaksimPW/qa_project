@@ -13,10 +13,10 @@ feature 'Question editing' do
 
     scenario 'with valid attributes', js: true do
       within '.question' do
-        click_link 'Edit'
+        click_link I18n.t('questions.question.edit')
         fill_in 'question_title', with: another_question.title
         fill_in 'question_body', with: another_question.body
-        click_button 'Update'
+        click_button I18n.t('helpers.submit.question.update')
       end
 
       expect(page).to have_content I18n.t('questions.update.success')
@@ -30,10 +30,10 @@ feature 'Question editing' do
 
     scenario 'with invalid attributes', js: true do
       within '.question' do
-        click_link 'Edit'
+        click_link I18n.t('questions.question.edit')
         fill_in 'question_title', with: ''
         fill_in 'question_body', with: ''
-        click_button 'Update'
+        click_button I18n.t('helpers.submit.question.update')
       end
 
       expect(page).to have_content I18n.t('questions.update.fail')
@@ -48,7 +48,7 @@ feature 'Question editing' do
     visit question_path(question)
 
     within '.question' do
-      expect(page).to_not have_link 'Edit'
+      expect(page).to_not have_link I18n.t('questions.question.edit')
     end
   end
 
@@ -56,7 +56,7 @@ feature 'Question editing' do
     visit question_path(question)
 
     within '.question' do
-      expect(page).to_not have_link 'Edit'
+      expect(page).to_not have_link I18n.t('questions.question.edit')
     end
   end
 end

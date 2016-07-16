@@ -12,10 +12,10 @@ feature 'User delete answer' do
     visit question_path(question)
 
     expect(page).to have_content answer.body
-    expect(page).to have_link('Delete answer', href: "/questions/#{question.id}/answers/#{answer.id}")
+    expect(page).to have_link(I18n.t('answers.answer.delete'), href: "/questions/#{question.id}/answers/#{answer.id}")
 
     within "#answer_#{answer.id}" do
-      click_on 'Delete answer'
+      click_on I18n.t('answers.answer.delete')
     end
 
     expect(page).to_not have_content answer.body
@@ -27,6 +27,6 @@ feature 'User delete answer' do
 
     visit question_path(question)
     expect(page).to have_content answer.body
-    expect(page).to_not have_link('Delete answer', href: "/questions/#{question.id}/answers/#{other_answer.id}")
+    expect(page).to_not have_link(I18n.t('answers.answer.delete'), href: "/questions/#{question.id}/answers/#{other_answer.id}")
   end
 end

@@ -14,9 +14,9 @@ feature 'Answer editing' do
 
     scenario 'with valid attributes', js: true do
       within "#answer_#{answer.id}" do
-        click_link 'Edit'
+        click_link I18n.t('answers.answer.edit')
         fill_in 'answer_body', with: another_answer.body
-        click_button 'Update'
+        click_button I18n.t('helpers.submit.answer.update')
       end
 
       expect(page).to have_content I18n.t('answers.update.success')
@@ -26,9 +26,9 @@ feature 'Answer editing' do
 
     scenario 'with invalid attributes', js: true do
       within "#answer_#{answer.id}" do
-        click_link 'Edit'
+        click_link I18n.t('answers.answer.edit')
         fill_in 'answer_body', with: ''
-        click_button 'Update'
+        click_button I18n.t('helpers.submit.answer.update')
       end
 
       expect(page).to have_content I18n.t('answers.update.fail')
@@ -41,7 +41,7 @@ feature 'Answer editing' do
     visit question_path(question)
 
     within "#answer_#{answer.id}" do
-      expect(page).to_not have_link 'Edit'
+      expect(page).to_not have_link I18n.t('answers.answer.edit')
     end
   end
 
@@ -49,7 +49,7 @@ feature 'Answer editing' do
     visit question_path(question)
 
     within "#answer_#{answer.id}" do
-      expect(page).to_not have_link 'Edit'
+      expect(page).to_not have_link I18n.t('answers.answer.edit')
     end
   end
 end
