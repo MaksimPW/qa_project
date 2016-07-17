@@ -1,11 +1,12 @@
 - if answer.persisted?
-  div id="answer_#{answer.id}"
-    p
+  div id="answer_#{answer.id}" class="panel panel-default"
+    div class='panel-body'
       = answer.body
-    - if user_signed_in? && current_user.author_of?(answer)
-      p= link_to t('.edit'), '#', class: 'edit-answer-link', data: { answer_id: answer.id }
-      = form_for [@question, answer], remote: true, html: { id: "edit-answer-#{answer.id}" } do |f|
-        = f.label :body, 'Answer'
-        = f.text_area :body
-        = f.submit
-      = link_to t('.delete'), question_answer_path(@question, answer), method: :delete, remote: true
+    div class='panel-footer'
+      - if user_signed_in? && current_user.author_of?(answer)
+        p= link_to t('.edit'), '#', class: 'edit-answer-link', data: { answer_id: answer.id }
+        = form_for [@question, answer], remote: true, html: { id: "edit-answer-#{answer.id}" } do |f|
+          = f.label :body, 'Answer'
+          = f.text_area :body
+          = f.submit
+        = link_to t('.delete'), question_answer_path(@question, answer), method: :delete, remote: true

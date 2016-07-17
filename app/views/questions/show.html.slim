@@ -4,9 +4,4 @@
   p = t('.answers_list')
   = render @question.answers
 
-- if user_signed_in?
-  p = t('.new_answer')
-  = form_for [@question, @answer], remote: true do |f|
-    = f.label :body
-    = f.text_area :body
-    = f.submit
+= render 'answers/new'
