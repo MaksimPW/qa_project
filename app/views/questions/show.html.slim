@@ -2,6 +2,6 @@
   = render @question
 .answers
   p = t('.answers_list')
-  = render @question.answers
+  = render @question.answers.order_best_first
 
 = render 'answers/new'

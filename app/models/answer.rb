@@ -8,6 +8,8 @@ class Answer < ActiveRecord::Base
   validates :body, presence: true,
                    length: { minimum: 30 }
 
+  scope :order_best_first, -> { order('best DESC NULLS LAST') }
+
   def is_best!
     transaction do
       self.question.answers.where(best: true).update_all(best: false)

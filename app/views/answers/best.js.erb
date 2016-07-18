@@ -1,2 +1,2 @@
-$('.answers').html('<%= j render @question.answers %>');
+$('.answers').html('<%= j render @question.answers.order_best_first %>');
 $('.notice').html('<%= j render 'layouts/notice' %>');
