@@ -24,6 +24,10 @@ en:
     answer:
       edit: Edit answer
       delete: Delete answer
+      set_best: Set best
+      best: Best!
+    best:
+      success: This answer was solved
     create:
       success: Answer created successfully
       fail: Create answer failed

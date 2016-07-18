@@ -78,6 +78,43 @@ RSpec.describe AnswersController, type: :controller do
     end
   end
 
+
+  describe 'POST #best' do
+    sign_in_user
+
+    let(:question) { create(:question, user: @user)}
+    let(:first_best_answer) { create(:answer, question: question) }
+    let(:answer) { create(:answer, question: question) }
+    let(:another_answer) { create(:answer, question: create(:question)) }
+
+    context 'Author of question can set best answer' do
+      it 'set best answer is true' do
+        patch :best, id: answer.id, question_id: question, format: :js
+        answer.reload
+        expect(answer.best).to be_truthy
+      end
+
+      it 'question can not have a lot of best answers' do
+        patch :best, id: answer.id, question_id: question, format: :js
+        first_best_answer.reload
+        expect(first_best_answer.best).to be_falsey
+      end
+
+      it 'render best template' do
+        patch :best, id: answer.id, question_id: question, format: :js
+        expect(response).to render_template :best
+      end
+    end
+
+    context 'Author can`t set best answer for another question' do
+      it 'can`t set best answer' do
+        patch :best, id: another_answer.id, question_id: another_answer.question_id, format: :js
+        another_answer.reload
+        expect(another_answer.best).to be_falsey
+      end
+    end
+  end
+
   describe 'DELETE #destroy' do
     sign_in_user
 

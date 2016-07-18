@@ -8,4 +8,18 @@ RSpec.describe Answer, type: :model do
 
   it { should validate_presence_of :body }
   it { should validate_length_of(:body).is_at_least(30) }
+
+  describe 'is_best!' do
+    let!(:question) { create(:question) }
+    let!(:answer) { create(:answer, question: question) }
+    let!(:best_answer) { create(:answer, best: true, question: question) }
+
+    it { expect { answer.is_best! }.to change(answer, :best).to(true) }
+
+    it 'change best answer for one question' do
+      answer.is_best!
+      best_answer.reload
+      expect(best_answer.best).to eq false
+    end
+  end
 end

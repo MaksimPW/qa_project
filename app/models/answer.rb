@@ -7,4 +7,11 @@ class Answer < ActiveRecord::Base
 
   validates :body, presence: true,
                    length: { minimum: 30 }
+
+  def is_best!
+    transaction do
+      self.question.answers.where(best: true).update_all(best: false)
+      update! best: true
+    end
+  end
 end

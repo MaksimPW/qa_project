@@ -1,5 +1,10 @@
 - if answer.persisted?
   div id="answer_#{answer.id}" class="panel panel-default"
+    .panel-heading
+      - if answer.best?
+        = t('.best')
+      - elsif user_signed_in? && current_user.author_of?(@question)
+        = link_to t('.set_best'), best_question_answer_path(@question, answer), method: :patch, remote: true
     div class='panel-body'
       = answer.body
     div class='panel-footer'
