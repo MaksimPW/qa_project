@@ -10,4 +10,6 @@ class Question < ActiveRecord::Base
 
   validates :body, presence: true,
                    length: { minimum: 30 }
+
+  accepts_nested_attributes_for :attachments
 end
