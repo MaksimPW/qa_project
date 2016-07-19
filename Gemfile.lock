@@ -154,6 +154,7 @@ GEM
     rake (11.2.2)
     rdoc (4.2.2)
       json (~> 1.4)
+    remotipart (1.2.1)
     responders (2.2.0)
       railties (>= 4.2.0, < 5.1)
     rspec-core (3.5.1)
@@ -243,6 +244,7 @@ DEPENDENCIES
   poltergeist
   rails (= 4.2.5)
   rails-i18n
+  remotipart
   rspec-rails
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)
