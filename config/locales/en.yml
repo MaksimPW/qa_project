@@ -38,6 +38,7 @@ en:
       success: Answer was successfully destroyed
   questions:
     question:
+      attachments: Attachments
       edit: Edit question
       delete: Delete question
     create:

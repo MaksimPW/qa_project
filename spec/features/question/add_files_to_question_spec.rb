@@ -12,10 +12,10 @@ feature 'Add files to question' do
   scenario 'User adds file asks question' do
     fill_in 'question_title', with: question.title
     fill_in 'question_body', with: question.body
-    attach_file 'question_file', "#{Rails.root}/spec/rails_helper.rb"
+    attach_file 'File', "#{Rails.root}/spec/rails_helper.rb"
 
     click_button I18n.t('helpers.submit.question.create')
 
-    expect(page).to have_content 'rails_helper.rb'
+    expect(page).to have_link 'rails_helper.rb', href: '/uploads/attachment/file/1/rails_helper.rb'
   end
 end
