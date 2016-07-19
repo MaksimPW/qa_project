@@ -1,4 +1,9 @@
-<% unless @question.errors.present? %>
+<% if @question.errors.present? %>
+    $('.question-errors').empty();
+    <% @question.errors.full_messages.each do |msg| %>
+        $('.question-errors').append('<p><%= j msg %></p>');
+    <% end %>
+<% else %>
     $('.question').html('<%= j render @question %>');
 <% end %>
 $('.notice').html('<%= j render 'layouts/notice' %>');

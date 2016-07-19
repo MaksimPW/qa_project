@@ -28,12 +28,12 @@ class QuestionsController < ApplicationController
   def update
     if current_user.author_of?(@question)
       if @question.update(question_params)
-        flash[:notice] = t('.success')
+        flash.now[:notice] = t('.success')
       else
-        flash[:notice] = t('.fail')
+        flash.now[:notice] = t('.fail')
       end
     else
-      flash[:notice] = t('.fail')
+      flash.now[:notice] = t('.fail')
     end
   end
 

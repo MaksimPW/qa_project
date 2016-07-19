@@ -37,6 +37,8 @@ feature 'Question editing' do
       end
 
       expect(page).to have_content I18n.t('questions.update.fail')
+      expect(page).to have_content 'Body can\'t be blank'
+      expect(page).to have_content 'Body is too short'
 
       expect(page).to have_content question.title
       expect(page).to have_content question.body
