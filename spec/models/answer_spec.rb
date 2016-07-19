@@ -19,7 +19,7 @@ RSpec.describe Answer, type: :model do
     it 'change best answer for one question' do
       answer.is_best!
       best_answer.reload
-      expect(best_answer.best).to eq false
+      expect(best_answer).to_not be_best
     end
   end
 end
