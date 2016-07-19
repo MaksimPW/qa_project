@@ -1,4 +1,4 @@
-require 'rails_helper'
+require 'acceptance_helper'
 
 feature 'User delete question' do
   given(:user) { create(:user) }
@@ -9,7 +9,7 @@ feature 'User delete question' do
     sign_in(user)
 
     visit question_path(question)
-    click_on 'Delete'
+    click_on I18n.t('questions.question.delete')
 
     expect(current_path).to eq questions_path
     expect(page).to_not have_content question.title
@@ -20,6 +20,6 @@ feature 'User delete question' do
     sign_in(user)
 
     visit question_path(other_question)
-    expect(page).to_not have_content 'Delete'
+    expect(page).to_not have_content I18n.t('questions.question.delete')
   end
 end

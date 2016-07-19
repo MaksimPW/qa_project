@@ -1,6 +1,7 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!, only: [:create, :destroy]
   before_action :load_question
+  before_action :load_answer, only: [:update, :best, :destroy]
 
   def create
     @answer = @question.answers.new(answer_params)
@@ -12,12 +13,28 @@ class AnswersController < ApplicationController
     end
   end
 
-  def destroy
-    @answer = Answer.find(params[:id])
+  def update
     if current_user.author_of?(@answer)
-      notice = t('answers.delete.success') if @answer.destroy
+      if @answer.update(answer_params)
+        flash.now[:notice] = t('.success')
+      else
+        flash.now[:notice] = t('.fail')
+      end
+    else
+      flash.now[:notice] = t('.fail')
     end
-    redirect_to question_path(@question), notice: notice
+  end
+
+  def best
+    if current_user.author_of?(@question)
+      flash.now[:notice] = t('.success') if @answer.is_best!
+    end
+  end
+
+  def destroy
+    if current_user.author_of?(@answer)
+      flash[:notice] = t('answers.delete.success') if @answer.destroy
+    end
   end
 
   private
@@ -28,5 +45,9 @@ class AnswersController < ApplicationController
 
   def load_question
     @question = Question.find(params[:question_id])
+  end
+
+  def load_answer
+    @answer = Answer.find(params[:id])
   end
 end

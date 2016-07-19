@@ -1,4 +1,4 @@
-require 'rails_helper'
+require 'acceptance_helper'
 
 feature 'User can view' do
   given(:questions) { create_list :question, 3}

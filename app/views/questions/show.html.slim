@@ -1,16 +1,7 @@
-= @question.title
-br
-= @question.body
-br
-- if user_signed_in? && current_user.author_of?(@question)
-  = link_to 'Delete', @question, method: :delete
+.question
+  = render @question
 .answers
   p = t('.answers_list')
-  = render @question.answers
+  = render @question.answers.order_best_first
 
-- if user_signed_in?
-  p = t('.new_answer')
-  = form_for [@question, @answer], remote: true do |f|
-    = f.label :body
-    = f.text_area :body
-    = f.submit
+= render 'answers/new'

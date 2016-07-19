@@ -1,6 +1,18 @@
 - if answer.persisted?
-  div id="answer_#{answer.id}"
-    p
+  div id="answer_#{answer.id}" class="panel panel-default"
+    .panel-heading
+      - if answer.best?
+        = t('.best')
+      - elsif user_signed_in? && current_user.author_of?(@question)
+        = link_to t('.set_best'), best_question_answer_path(@question, answer), method: :patch, remote: true
+    div class='panel-body'
+      .errors
       = answer.body
-    - if user_signed_in? && current_user.author_of?(answer)
-      = link_to 'Delete answer', question_answer_path(@question, answer), method: :delete
+    div class='panel-footer'
+      - if user_signed_in? && current_user.author_of?(answer)
+        p= link_to t('.edit'), '#', class: 'edit-answer-link', data: { answer_id: answer.id }
+        = form_for [@question, answer], remote: true, html: { id: "edit-answer-#{answer.id}" } do |f|
+          = f.label :body, 'Answer'
+          = f.text_area :body
+          = f.submit
+        = link_to t('.delete'), question_answer_path(@question, answer), method: :delete, remote: true

@@ -1,4 +1,4 @@
-require 'rails_helper'
+require 'acceptance_helper'
 
 feature 'User create answer' do
   given(:answer) { build(:answer) }
@@ -13,7 +13,7 @@ feature 'User create answer' do
 
     scenario 'with valid attributes', js: true do
       fill_in 'answer_body', with: answer.body
-      click_button 'Create'
+      click_button I18n.t('helpers.submit.answer.create')
 
       expect(current_path).to eq question_path(question)
       expect(page).to have_content I18n.t('answers.create.success')
@@ -21,7 +21,7 @@ feature 'User create answer' do
     end
 
     scenario 'with invalid attributes', js: true do
-      click_button 'Create'
+      click_button I18n.t('helpers.submit.answer.create')
 
       expect(page).to have_content I18n.t('answers.create.fail')
     end
@@ -31,6 +31,6 @@ feature 'User create answer' do
     visit question_path(question)
 
     expect(page).to_not have_content I18n.t('questions.show.new_answer')
-    expect(page).to_not have_button 'Create Answer'
+    expect(page).to_not have_button I18n.t('helpers.submit.answer.create')
   end
 end

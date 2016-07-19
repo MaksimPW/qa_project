@@ -1,3 +1,5 @@
+<% unless @answer.errors.present? %>
+    $('#new_answer').find("#answer_body").val('');
+<% end %>
 $('.answers').append('<%= j render @answer %>');
-$('#answer_body').val('');
 $('.notice').html('<%= j render 'layouts/notice' %>');
