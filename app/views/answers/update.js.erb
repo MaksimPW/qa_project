@@ -1,4 +1,9 @@
-<% unless @answer.errors.present? %>
+<% if @answer.errors.present? %>
+    $("#answer_<%= @answer.id %> .errors").empty();
+    <% @answer.errors.full_messages.each do |msg| %>
+        $("#answer_<%= @answer.id %> .errors").append('<p><%= j msg %></p>');
+    <% end %>
+<% else %>
     $('#answer_<%= @answer.id %>').html('<%= j render @answer %>');
 <% end %>
-$('.notice').html('<%= j render 'layouts/notice' %>');
+    $('.notice').html('<%= j render 'layouts/notice' %>');

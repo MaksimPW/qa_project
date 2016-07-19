@@ -31,6 +31,8 @@ feature 'Answer editing' do
         click_button I18n.t('helpers.submit.answer.update')
       end
 
+      expect(page).to have_content 'Body is too short'
+      expect(page).to have_content 'Body can\'t be blank'
       expect(page).to have_content I18n.t('answers.update.fail')
       expect(page).to have_content answer.body
     end
