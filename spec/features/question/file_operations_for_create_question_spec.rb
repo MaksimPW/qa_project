@@ -1,6 +1,6 @@
 require 'acceptance_helper'
 
-feature 'Add files to question' do
+feature 'User can perform file operations when he create question' do
   given(:user) { create(:user) }
   given(:question) { create(:question) }
 
@@ -11,7 +11,7 @@ feature 'Add files to question' do
     fill_in 'question_body', with: question.body
   end
 
-  scenario 'User adds file asks question' do
+  scenario 'Adds file' do
     attach_file 'File', "#{Rails.root}/spec/rails_helper.rb"
 
     click_button I18n.t('helpers.submit.question.create')
@@ -19,7 +19,7 @@ feature 'Add files to question' do
     expect(page).to have_link 'rails_helper.rb', href: '/uploads/attachment/file/1/rails_helper.rb'
   end
 
-  scenario 'User adds multiply files asks question', js: true do
+  scenario 'Adds multiply files', js: true do
     click_on 'Add file'
 
     inputs = all('input[type="file"]')
@@ -32,7 +32,7 @@ feature 'Add files to question' do
     expect(page).to have_link 'spec_helper.rb', href: '/uploads/attachment/file/3/spec_helper.rb'
   end
 
-  scenario 'User remove one file when it asks question', js: true do
+  scenario 'Removes one file', js: true do
     click_on 'Add file'
 
     inputs = all('input[type="file"]')

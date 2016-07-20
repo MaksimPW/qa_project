@@ -1,6 +1,6 @@
 require 'acceptance_helper'
 
-feature 'Add files to answer' do
+feature 'User can perform file operations when he create answer' do
   given(:user) { create(:user) }
   given(:question) { create(:question) }
   given(:answer) { create(:answer, question: question) }
@@ -11,7 +11,7 @@ feature 'Add files to answer' do
     fill_in 'answer_body', with: answer.body
   end
 
-  scenario 'User adds file when he answers', js: true do
+  scenario 'Adds file', js: true do
     attach_file 'File', "#{Rails.root}/spec/rails_helper.rb"
     click_on I18n.t('helpers.submit.answer.create')
 
@@ -20,7 +20,7 @@ feature 'Add files to answer' do
     end
   end
 
-  scenario 'User adds multiply files when he answers', js: true do
+  scenario 'Adds multiply files', js: true do
     click_on 'Add file'
 
     within '#new_answer' do
@@ -35,7 +35,7 @@ feature 'Add files to answer' do
     expect(page).to have_xpath("//a[contains(.,'spec_helper.rb')]")
   end
 
-  scenario 'User remove one file when he answers', js: true do
+  scenario 'Removes one file', js: true do
     click_on 'Add file'
 
     within '#new_answer' do
