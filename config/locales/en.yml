@@ -68,3 +68,7 @@ en:
       answer:
         create: "Create answer"
         update: "Save answer"
+  cocoon:
+    defaults:
+      add: Add file
+      remove: Remove file

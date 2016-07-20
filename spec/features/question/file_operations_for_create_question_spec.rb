@@ -9,7 +9,7 @@ feature 'User can perform file operations when he create question', js: true do
     visit new_question_path
     fill_in 'question_title', with: question.title
     fill_in 'question_body', with: question.body
-    click_on 'Add file'
+    click_on I18n.t('cocoon.defaults.add')
   end
 
   scenario 'Adds file' do
@@ -20,7 +20,7 @@ feature 'User can perform file operations when he create question', js: true do
   end
 
   scenario 'Adds multiply files', js: true do
-    click_on 'Add file'
+    click_on I18n.t('cocoon.defaults.add')
 
     inputs = all('input[type="file"]')
     inputs[0].set("#{Rails.root}/spec/rails_helper.rb")
@@ -33,13 +33,13 @@ feature 'User can perform file operations when he create question', js: true do
   end
 
   scenario 'Removes one file', js: true do
-    click_on 'Add file'
+    click_on I18n.t('cocoon.defaults.add')
 
     inputs = all('input[type="file"]')
     inputs[0].set("#{Rails.root}/spec/rails_helper.rb")
     inputs[1].set("#{Rails.root}/spec/spec_helper.rb")
 
-    first('.attachment-file').click_on('Remove file')
+    first('.attachment-file').click_on(I18n.t('cocoon.defaults.remove'))
 
     click_button I18n.t('helpers.submit.question.create')
 

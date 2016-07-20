@@ -9,7 +9,7 @@ feature 'User can perform file operations when he create answer' do
     sign_in(user)
     visit question_path(question)
     fill_in 'answer_body', with: answer.body
-    click_on 'Add file'
+    click_on I18n.t('cocoon.defaults.add')
   end
 
   scenario 'Adds file', js: true do
@@ -22,7 +22,7 @@ feature 'User can perform file operations when he create answer' do
   end
 
   scenario 'Adds multiply files', js: true do
-    click_on 'Add file'
+    click_on I18n.t('cocoon.defaults.add')
 
     within '#new_answer' do
       inputs = all('input[type="file"]')
@@ -37,7 +37,7 @@ feature 'User can perform file operations when he create answer' do
   end
 
   scenario 'Removes one file', js: true do
-    click_on 'Add file'
+    click_on I18n.t('cocoon.defaults.add')
 
     within '#new_answer' do
       inputs = all('input[type="file"]')
@@ -45,7 +45,7 @@ feature 'User can perform file operations when he create answer' do
       inputs[1].set("#{Rails.root}/spec/spec_helper.rb")
     end
 
-    first('.attachment-file').click_on('Remove file')
+    first('.attachment-file').click_on(I18n.t('cocoon.defaults.remove'))
 
     click_button I18n.t('helpers.submit.answer.create')
 

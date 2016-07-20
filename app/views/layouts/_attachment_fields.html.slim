@@ -4,4 +4,4 @@
     = f.file_field :file
   - else
     = f.object.file.identifier.to_s
-  = link_to_remove_association 'Remove file', f, { wrapper_class: 'attachment-file' }
+  = link_to_remove_association f, { wrapper_class: 'attachment-file' }

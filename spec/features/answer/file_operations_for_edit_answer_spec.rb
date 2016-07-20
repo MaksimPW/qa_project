@@ -15,7 +15,7 @@ feature 'User can perform file operations when he edit answer', js: true do
     click_on I18n.t('answers.answer.edit')
 
     within '.answers' do
-      click_on 'Remove file'
+      click_on I18n.t('cocoon.defaults.remove')
       click_on I18n.t('helpers.submit.answer.update')
     end
 
@@ -27,7 +27,7 @@ feature 'User can perform file operations when he edit answer', js: true do
 
     within '.attachment-file' do
       expect(page).to have_content attachment.file.identifier
-      expect(page).to have_link 'Remove file'
+      expect(page).to have_link I18n.t('cocoon.defaults.remove')
     end
   end
 end
