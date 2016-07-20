@@ -27,7 +27,7 @@ feature 'User can perform file operations when he create answer' do
     within '#new_answer' do
       inputs = all('input[type="file"]')
       inputs[0].set("#{Rails.root}/spec/rails_helper.rb")
-      inputs[1].set( "#{Rails.root}/spec/spec_helper.rb")
+      inputs[1].set("#{Rails.root}/spec/spec_helper.rb")
     end
 
     click_button I18n.t('helpers.submit.answer.create')
@@ -42,7 +42,7 @@ feature 'User can perform file operations when he create answer' do
     within '#new_answer' do
       inputs = all('input[type="file"]')
       inputs[0].set("#{Rails.root}/spec/rails_helper.rb")
-      inputs[1].set( "#{Rails.root}/spec/spec_helper.rb")
+      inputs[1].set("#{Rails.root}/spec/spec_helper.rb")
     end
 
     first('.attachment-file').click_on('Remove file')

@@ -24,10 +24,9 @@ feature 'User can perform file operations when he create question', js: true do
 
     inputs = all('input[type="file"]')
     inputs[0].set("#{Rails.root}/spec/rails_helper.rb")
-    inputs[1].set( "#{Rails.root}/spec/spec_helper.rb")
+    inputs[1].set("#{Rails.root}/spec/spec_helper.rb")
 
     click_button I18n.t('helpers.submit.question.create')
-    save_and_open_page
 
     expect(page).to have_xpath("//a[contains(.,'rails_helper.rb')]")
     expect(page).to have_xpath("//a[contains(.,'spec_helper.rb')]")
@@ -38,7 +37,7 @@ feature 'User can perform file operations when he create question', js: true do
 
     inputs = all('input[type="file"]')
     inputs[0].set("#{Rails.root}/spec/rails_helper.rb")
-    inputs[1].set( "#{Rails.root}/spec/spec_helper.rb")
+    inputs[1].set("#{Rails.root}/spec/spec_helper.rb")
 
     first('.attachment-file').click_on('Remove file')
 
