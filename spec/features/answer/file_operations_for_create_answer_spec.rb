@@ -9,6 +9,7 @@ feature 'User can perform file operations when he create answer' do
     sign_in(user)
     visit question_path(question)
     fill_in 'answer_body', with: answer.body
+    click_on 'Add file'
   end
 
   scenario 'Adds file', js: true do
