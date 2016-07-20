@@ -9,7 +9,7 @@ class Answer < ActiveRecord::Base
   validates :body, presence: true,
                    length: { minimum: 30 }
 
-  accepts_nested_attributes_for :attachments
+  accepts_nested_attributes_for :attachments, reject_if: :all_blank, allow_destroy: true
 
   scope :order_best_first, -> { order('best DESC NULLS LAST') }
 
