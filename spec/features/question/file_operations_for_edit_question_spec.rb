@@ -20,4 +20,13 @@ feature 'User can perform file operations when he edit question', js: true do
 
     expect(page).to_not have_link attachment.file.identifier
   end
+
+  scenario 'See current files', js: true do
+    click_on I18n.t('questions.question.edit')
+
+    within '.attachment-file' do
+      expect(page).to have_content attachment.file.identifier
+      expect(page).to have_link 'Remove file'
+    end
+  end
 end
