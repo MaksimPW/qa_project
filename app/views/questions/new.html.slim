@@ -8,6 +8,6 @@
   .input-group
     = f.fields_for :attachments do |a|
       = render 'layouts/attachment_fields', f: a
-      = link_to_add_association 'Add file', f, :attachments, partial: 'layouts/attachment_fields'
+    = link_to_add_association 'Add file', f, :attachments, partial: 'layouts/attachment_fields'
   br
     = f.submit class: 'btn btn-default'
