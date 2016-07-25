@@ -1,0 +1,7 @@
+.attachment-file
+  = f.label :file
+  - if f.object.new_record?
+    = f.file_field :file
+  - else
+    = f.object.file.identifier.to_s
+  = link_to_remove_association f, { wrapper_class: 'attachment-file' }

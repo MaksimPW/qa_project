@@ -38,6 +38,7 @@ en:
       success: Answer was successfully destroyed
   questions:
     question:
+      attachments: Attachments
       edit: Edit question
       delete: Delete question
     create:
@@ -67,3 +68,7 @@ en:
       answer:
         create: "Create answer"
         update: "Save answer"
+  cocoon:
+    defaults:
+      add: Add file
+      remove: Remove file

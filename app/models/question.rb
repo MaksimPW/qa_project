@@ -1,6 +1,7 @@
 class Question < ActiveRecord::Base
   belongs_to :user
   has_many :answers, dependent: :destroy
+  has_many :attachments, as: :attachable
 
   validates :user_id, presence: true
 
@@ -9,4 +10,6 @@ class Question < ActiveRecord::Base
 
   validates :body, presence: true,
                    length: { minimum: 30 }
+
+  accepts_nested_attributes_for :attachments, reject_if: :all_blank, allow_destroy: true
 end

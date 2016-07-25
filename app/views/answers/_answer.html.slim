@@ -8,11 +8,19 @@
     div class='panel-body'
       .errors
       = answer.body
+      ul
+        - answer.attachments.each do |a|
+          li= link_to a.file.identifier, a.file.url
     div class='panel-footer'
       - if user_signed_in? && current_user.author_of?(answer)
         p= link_to t('.edit'), '#', class: 'edit-answer-link', data: { answer_id: answer.id }
         = form_for [@question, answer], remote: true, html: { id: "edit-answer-#{answer.id}" } do |f|
-          = f.label :body, 'Answer'
-          = f.text_area :body
+          .input-group
+            = f.label :body, 'Answer'
+            = f.text_area :body
+          .input-group
+            = f.fields_for :attachments do |a|
+              = render 'layouts/attachment_fields', f: a
+            = link_to_add_association f, :attachments, partial: 'layouts/attachment_fields'
           = f.submit
         = link_to t('.delete'), question_answer_path(@question, answer), method: :delete, remote: true

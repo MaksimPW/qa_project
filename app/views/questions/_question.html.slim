@@ -2,15 +2,25 @@ div class='panel panel-default'
   div class='panel-heading'
     h1= @question.title
   div class='panel-body'
-    = @question.body
+    p= @question.body
+    p= t('attachmets')
+    ul
+      - @question.attachments.each do |a|
+        li= link_to a.file.identifier, a.file.url
   div class='panel-footer'
     - if user_signed_in? && current_user.author_of?(@question)
       p= link_to t('.edit'), '#', class: 'edit-question-link', data: { question_id: @question.id }
       div class='question-errors'
       = form_for @question, remote: true, html: {id: "edit-question-#{@question.id}"} do |f|
-        = f.label :title
-        = f.text_field :title
-        = f.label :body
-        = f.text_area :body
-        = f.submit
+        .input-group
+          = f.label :title
+          = f.text_field :title
+        .input-group
+          = f.label :body
+          = f.text_area :body
+        .input-group
+          = f.fields_for :attachments do |a|
+            = render 'layouts/attachment_fields', f: a
+          = link_to_add_association f, :attachments, partial: 'layouts/attachment_fields'
+        = f.submit class: 'btn btn-default'
       = link_to t('.delete'), @question, method: :delete
