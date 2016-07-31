@@ -2,6 +2,7 @@ div class='panel panel-default'
   div class='panel-heading'
     h1= @question.title
   div class='panel-body'
+    = render 'layouts/votable_manager', object: @question
     p= @question.body
     p= t('attachmets')
     ul

@@ -6,8 +6,13 @@ class User < ActiveRecord::Base
 
   has_many :questions, dependent: :destroy
   has_many :answers, dependent: :destroy
+  has_many :votes, dependent: :destroy
 
   def author_of?(object)
     id == object.user_id
+  end
+
+  def voted?(object)
+    votes.exists?(votable: object)
   end
 end

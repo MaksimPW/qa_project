@@ -1,4 +1,6 @@
 class Answer < ActiveRecord::Base
+  include UserVotable
+
   belongs_to :user
   belongs_to :question
   has_many :attachments, as: :attachable

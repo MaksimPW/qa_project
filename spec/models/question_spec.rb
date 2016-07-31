@@ -13,4 +13,6 @@ RSpec.describe Question, type: :model do
   it { should validate_length_of(:body).is_at_least(30) }
 
   it { should accept_nested_attributes_for :attachments }
+
+  it_behaves_like 'user_votable'
 end
