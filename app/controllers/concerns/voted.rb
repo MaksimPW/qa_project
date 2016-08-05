@@ -31,7 +31,7 @@ module Voted
   private
 
   def load_vote
-    @votable_object = controller_name.classify.constantize.find(params[:id])
+    @votable_object = controller_name.singularize.classify.constantize.find(params[:id])
   end
 
   def set_vote(value, button_vote)

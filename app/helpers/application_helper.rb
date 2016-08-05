@@ -1,12 +1,13 @@
 module ApplicationHelper
   def button_vote(object, action)
-    a = false
+
     if vote = Vote.find_by(user: current_user, votable_id: object.id)
-      a = true if action == 'up' && vote.value == 1
-      a = true if action == 'down' && vote.value == -1
+      right_vote = true if action == 'up' && vote.value == 1
+      right_vote = true if action == 'down' && vote.value == -1
     end
 
-    if current_user.voted?(object) && a
+
+    if current_user.voted?(object) && right_vote
       link = {
           path: '_vote_destroy_path',
           class: "vote-#{action} active",

@@ -1,8 +1,8 @@
 RSpec.shared_examples_for 'voted' do
   describe 'PATCH #vote_up' do
     sign_in_user
-    let(:user_object) { create(described_class.controller_name.classify.constantize, user: @user) }
-    let(:object) { create(described_class.controller_name.classify.constantize) }
+    let(:user_object) { create(described_class.controller_name.singularize.to_sym, user: @user) }
+    let(:object) { create(described_class.controller_name.singularize.to_sym) }
 
     it 'assigns the requested object to @votable_object' do
       patch :vote_up, id: object.id, format: :json
@@ -48,8 +48,8 @@ RSpec.shared_examples_for 'voted' do
 
   describe 'PATCH #vote_down' do
     sign_in_user
-    let(:user_object) { create(described_class.controller_name.classify.constantize, user: @user) }
-    let(:object) { create(described_class.controller_name.classify.constantize) }
+    let(:user_object) { create(described_class.controller_name.singularize.to_sym, user: @user) }
+    let(:object) { create(described_class.controller_name.singularize.to_sym) }
 
     it 'assigns the requested object to @votable_object' do
       patch :vote_down, id: object.id, format: :json
@@ -95,8 +95,8 @@ RSpec.shared_examples_for 'voted' do
 
   describe 'DELETE #vote_destroy' do
     sign_in_user
-    let(:user_object) { create(described_class.controller_name.classify.constantize, user: @user) }
-    let(:object) { create(described_class.controller_name.classify.constantize) }
+    let(:user_object) { create(described_class.controller_name.singularize.to_sym, user: @user) }
+    let(:object) { create(described_class.controller_name.singularize.to_sym) }
 
     before { patch :vote_up, id: object.id, format: :json }
 

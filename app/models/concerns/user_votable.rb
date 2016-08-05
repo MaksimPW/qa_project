@@ -8,24 +8,20 @@ module UserVotable
   def create_vote(user, value)
     ActiveRecord::Base.transaction do
       vote = votes.find_or_initialize_by(user: user)
-      vote.update_attribute :value, value
-      update_score
+      update_score if vote.update!(value: value)
     end
   end
 
   def destroy_vote(user)
     ActiveRecord::Base.transaction do
       vote = votes.find_by(user: user)
-      if vote
-        vote.destroy
-        update_score
-      end
+      update_score if vote.destroy!
     end
   end
 
   private
 
   def update_score
-    update_attribute :score, votes.sum(:value)
+    update!(score: votes.sum(:value))
   end
 end
