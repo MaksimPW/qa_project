@@ -3,5 +3,5 @@
     h3=object.score
   - if current_user && !current_user.author_of?(object)
     .buttons
-      = raw button_vote(object, 'up')
-      = raw button_vote(object, 'down')
+      = raw button_vote('up', object)
+      = raw button_vote('down', object)
