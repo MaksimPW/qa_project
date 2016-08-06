@@ -14,7 +14,7 @@ button_vote = ->
 
         $(element).attr({
           class: "vote-#{data.button_vote} active",
-          href: "/#{data.kontroller.toLowerCase()}_vote_destroy/#{data.object}"
+          href: "/#{data.kontroller}_vote_destroy/#{data.object}"
         });
         $(element).data('method', 'delete')
 
@@ -22,7 +22,7 @@ button_vote = ->
 
         $(element).attr({
           class: "vote-#{klass}",
-          href: "/#{data.kontroller.toLowerCase()}_vote_#{klass}/#{data.object}"
+          href: "/#{data.kontroller}_vote_#{klass}/#{data.object}"
         });
         $(element).data('method', 'patch')
 
@@ -30,7 +30,7 @@ button_vote = ->
 
         $(element).attr({
             class: "vote-#{klass}",
-            href: "/#{data.kontroller.toLowerCase()}_vote_#{klass}/#{data.object}"
+            href: "/#{data.kontroller}_vote_#{klass}/#{data.object}"
         });
         $(element).data('method', 'patch')
 

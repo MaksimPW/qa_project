@@ -14,7 +14,7 @@ RSpec.shared_examples_for 'voted' do
       json = %({"object": #{object.id},
                 "score": 1,
                 "button_vote": "up",
-                "kontroller": "#{described_class.controller_name.classify.constantize}"}
+                "kontroller": "#{described_class.controller_name.singularize}"}
               )
 
       expect(response.body).to be_json_eql json
@@ -61,7 +61,7 @@ RSpec.shared_examples_for 'voted' do
       json = %({"object": #{object.id},
                 "score": -1,
                 "button_vote": "down",
-                "kontroller": "#{described_class.controller_name.classify.constantize}"}
+                "kontroller": "#{described_class.controller_name.singularize}"}
               )
 
       expect(response.body).to be_json_eql json
@@ -105,7 +105,7 @@ RSpec.shared_examples_for 'voted' do
       json = %({"object": #{object.id},
                 "score": 0,
                 "button_vote": "destroy",
-                "kontroller": "#{described_class.controller_name.classify.constantize}"}
+                "kontroller": "#{described_class.controller_name.singularize}"}
               )
 
       expect(response.body).to be_json_eql json

@@ -1,7 +1,7 @@
 module ApplicationHelper
   def button_vote(object, action)
 
-    if vote = Vote.find_by(user: current_user, votable_id: object.id)
+    if vote = Vote.find_by(user: current_user, votable: object)
       right_vote = true if action == 'up' && vote.value == 1
       right_vote = true if action == 'down' && vote.value == -1
     end

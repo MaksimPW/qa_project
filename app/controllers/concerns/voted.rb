@@ -8,11 +8,11 @@ module Voted
   end
 
   def vote_up
-    set_vote('1', 'up')
+    set_vote(1, 'up')
   end
 
   def vote_down
-    set_vote('-1', 'down')
+    set_vote(-1, 'down')
   end
 
   def vote_destroy
@@ -21,7 +21,7 @@ module Voted
       render json: { object: @votable_object.id,
                      score: @votable_object.score,
                      button_vote: 'destroy',
-                     kontroller: "#{controller_name.classify.constantize}"
+                     kontroller: "#{controller_name.singularize}"
              }
     else
       render json: { errors: 'Not found' }, status: :not_found
@@ -42,7 +42,7 @@ module Voted
       render json: { object: @votable_object.id,
                      score: @votable_object.score,
                      button_vote: button_vote,
-                     kontroller: "#{controller_name.classify.constantize}"
+                     kontroller: "#{controller_name.singularize}"
              }
     end
   end
