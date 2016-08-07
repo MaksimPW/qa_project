@@ -4,6 +4,8 @@
         $('.question-errors').append('<p><%= j msg %></p>');
     <% end %>
 <% else %>
-    $('.question').html('<%= j render @question %>');
+    <% publish_to "/questions/#{@question.id}" do %>
+        $('.question').html('<%= j render @question %>');
+    <% end %>
 <% end %>
 $('.notice').html('<%= j render 'layouts/notice' %>');

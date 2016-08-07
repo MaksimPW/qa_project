@@ -5,4 +5,5 @@
   = render @question.answers.order_best_first
 = render 'answers/new'
 
+= subscribe_to "/questions/#{@question.id}"
 = subscribe_to "/questions/#{@question.id}/answers"
