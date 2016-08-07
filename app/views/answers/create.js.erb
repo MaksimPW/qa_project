@@ -1,8 +1,13 @@
-<% unless @answer.errors.present? %>
+<% if @answer.errors.present? %>
+    $('.new_answer .errors').empty();
+    <% @answer.errors.full_messages.each do |msg| %>
+        $('.new_answer .errors').append('<p><%= j msg %></p>');
+    <% end %>
+<% else %>
     $('#new_answer').find("#answer_body").val('');
+
+    <% publish_to "/questions/#{@question.id}/answers" do %>
+        $('.answers').append('<%= j render @answer %>');
+    <% end %>
 <% end %>
 $('.notice').html('<%= j render 'layouts/notice' %>');
-
-<% publish_to "/questions/#{@question.id}/answers" do %>
-    $('.answers').append('<%= j render @answer %>');
-<% end %>

@@ -4,6 +4,7 @@
       = t('.new_answer')
     .panel-body
       = form_for [@question, @answer], remote: true do |f|
+        .errors
         .input-group
           = f.label :body
           = f.text_area :body
