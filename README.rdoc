@@ -5,6 +5,11 @@ application up and running.
 
 Things you may want to cover:
 
+* How to run rails app
+
+Run server: rails s
+Run private_pub in new terminal: rackup private_pub.ru -s thin -E production
+
 * How to run the test suite
 
 `bundle`

@@ -1,5 +1,8 @@
 <% unless @answer.errors.present? %>
     $('#new_answer').find("#answer_body").val('');
 <% end %>
-$('.answers').append('<%= j render @answer %>');
 $('.notice').html('<%= j render 'layouts/notice' %>');
+
+<% publish_to "/questions/#{@question.id}/answers" do %>
+    $('.answers').append('<%= j render @answer %>');
+<% end %>
