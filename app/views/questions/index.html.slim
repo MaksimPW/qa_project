@@ -2,7 +2,10 @@ div class='panel panel-default'
   .panel-heading
     h1= t('.h1')
   .panel-body
-    - @questions.each do |q|
-      p= link_to q.title, q
+    .questions
+      - @questions.each do |q|
+        p= link_to q.title, q
   .panel-footer
     = link_to t('.create_question'), new_question_path
+
+= subscribe_to '/questions/index'

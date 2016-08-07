@@ -20,6 +20,7 @@ class QuestionsController < ApplicationController
     @question = current_user.questions.new(question_params)
 
     if @question.save
+      PrivatePub.publish_to '/questions/index', question: @question.to_json
       redirect_to @question, notice: t('.success')
     else
       flash.now[:notice] = t('.fail')
