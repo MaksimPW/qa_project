@@ -1,0 +1,7 @@
+.votable-manager data= { object_id: object.id }
+  .score
+    h3=object.score
+  - if current_user && !current_user.author_of?(object)
+    .buttons
+      = raw button_vote('up', object)
+      = raw button_vote('down', object)

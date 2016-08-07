@@ -1,7 +1,9 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!, only: [:create, :destroy]
-  before_action :load_question
+  before_action :load_question, except: [:vote_up, :vote_down, :vote_destroy]
   before_action :load_answer, only: [:update, :best, :destroy]
+
+  include Voted
 
   def create
     @answer = @question.answers.new(answer_params)

@@ -6,6 +6,7 @@
       - elsif user_signed_in? && current_user.author_of?(@question)
         = link_to t('.set_best'), best_question_answer_path(@question, answer), method: :patch, remote: true
     div class='panel-body'
+      = render 'layouts/votable_manager', object: answer
       .errors
       = answer.body
       ul
