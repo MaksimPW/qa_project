@@ -4,6 +4,10 @@
         $("#answer_<%= @answer.id %> .errors").append('<p><%= j msg %></p>');
     <% end %>
 <% else %>
-    $('#answer_<%= @answer.id %>').html('<%= j render @answer %>');
+
+    <% publish_to "/questions/#{@question.id}/answers" do %>
+        $('#answer_<%= @answer.id %>').html('<%= j render @answer %>');
+    <% end %>
+
 <% end %>
     $('.notice').html('<%= j render 'layouts/notice' %>');
