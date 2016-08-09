@@ -25,3 +25,4 @@ div class='panel panel-default'
           = link_to_add_association f, :attachments, partial: 'layouts/attachment_fields'
         = f.submit class: 'btn btn-default'
       = link_to t('.delete'), @question, method: :delete
+    = render 'comments/comments', object: @question

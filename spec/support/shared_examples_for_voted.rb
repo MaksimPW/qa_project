@@ -122,10 +122,10 @@ RSpec.shared_examples_for 'voted' do
     end
 
     it 'render json error if error' do
-       delete :vote_destroy, id: object.id, format: :json
-       delete :vote_destroy, id: object.id, format: :json
-       json = %({"errors": "Not found"})
-       expect(response.body).to be_json_eql json
+      delete :vote_destroy, id: object.id, format: :json
+      delete :vote_destroy, id: object.id, format: :json
+      json = %({"errors": "Not found"})
+      expect(response.body).to be_json_eql json
     end
   end
 end

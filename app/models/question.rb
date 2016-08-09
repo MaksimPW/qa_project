@@ -1,5 +1,6 @@
 class Question < ActiveRecord::Base
   include UserVotable
+  include UserCommentable
 
   belongs_to :user
   has_many :answers, dependent: :destroy

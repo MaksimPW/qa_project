@@ -25,3 +25,4 @@
             = link_to_add_association f, :attachments, partial: 'layouts/attachment_fields'
           = f.submit
         = link_to t('.delete'), question_answer_path(@question, answer), method: :delete, remote: true
+      = render 'comments/comments', object: answer

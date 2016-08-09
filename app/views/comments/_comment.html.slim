@@ -1,0 +1,6 @@
+- if comment.persisted?
+  p data-comment-id="#{comment.id}"
+    = comment.body
+    '
+    - if current_user && current_user.author_of?(comment)
+      = link_to 'Delete', comment, method: :delete, remote: true
