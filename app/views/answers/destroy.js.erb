@@ -1,2 +1,4 @@
-$('#answer_<%= @answer.id %>').remove();
+<% publish_to "/questions/#{@question.id}/answers" do %>
+    $('#answer_<%= @answer.id %>').remove();
+<% end %>
 $('.notice').html('<%= j render 'layouts/notice' %>');

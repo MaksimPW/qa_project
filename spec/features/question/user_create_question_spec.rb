@@ -25,6 +25,10 @@ feature 'User create question' do
     scenario 'with invalid attributes' do
       click_button I18n.t('helpers.submit.question.create')
 
+      expect(page).to have_content 'Title is too short'
+      expect(page).to have_content 'Title can\'t be blank'
+      expect(page).to have_content 'Body is too short'
+      expect(page).to have_content 'Body can\'t be blank'
       expect(page).to have_content I18n.t('questions.create.fail')
       expect(current_path).to eq questions_path
     end

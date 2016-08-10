@@ -1,5 +1,6 @@
 class Answer < ActiveRecord::Base
   include UserVotable
+  include UserCommentable
 
   belongs_to :user
   belongs_to :question

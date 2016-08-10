@@ -13,6 +13,7 @@ RSpec.describe Answer, type: :model do
   it { should accept_nested_attributes_for :attachments }
 
   it_behaves_like 'user_votable'
+  it_behaves_like 'user_commentable'
 
   describe 'is_best!' do
     let!(:question) { create(:question) }
