@@ -14,6 +14,6 @@ $(document).ready(ready)
 $(document).on('turbolinks:load', ready)
 
 $ ->
-  PrivatePub.subscribe '/questions/index', (data, channel) ->
+  PrivatePub.subscribe '/questions', (data, channel) ->
     question = $.parseJSON(data['question'])
     $('.questions').append("<p><a href='/questions/#{question.id}'>#{question.title}</a></p>");
