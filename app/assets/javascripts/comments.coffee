@@ -10,21 +10,18 @@ comment = ->
     commentable_type = $(this).data('commentableType')
     $("form#new-comment-#{commentable_type.toLowerCase()}-#{commentable_id}").show()
 
-  $(document).on 'click', ".comments [data-method='delete']", (e) ->
-    $(".comments [data-method='delete']").bind 'ajax:success', (e, data, status, xhr) ->
-      $("[data-comment-id=#{data.id}]").remove()
-
-  $('.comments .new_comment').bind 'ajax:success', (e, data, status, xhr) ->
-    if (typeof(data.comment) != 'undefined' && data.comment.body && data.comment.commentable_id && data.comment.commentable_type)
-      commentable = $("[data-object-id='#{data.comment.commentable_id}'][data-object-type='#{data.comment.commentable_type.toLowerCase()}']")
-      render_link_delete = "<a data-remote='true' rel='nofollow' data-method='delete' href='/comments/#{data.comment}'>Delete</a>"
-      commentable.find('.list').append("<p data-comment-id='#{data.comment}'>#{data.comment.body} #{render_link_delete}</p>")
-
   $('.comments .new_comment').bind 'ajax:error', (e, xhr, status, error) ->
     errors = xhr.responseJSON.errors
     for message of errors
       $('.comments .new_comment .errors').append "<p>#{errors[message]}</p>"
 
+  PrivatePub.subscribe "/comments", (data, channel) ->
+    if comment = (data['comment'])
+      commentable = $("[data-object-id='#{comment.commentable_id}'][data-object-type='#{comment.commentable_type.toLowerCase()}']")
+      render_link_delete = "<a data-remote='true' rel='nofollow' data-method='delete' href='/comments/#{data.comment}'>Delete</a>"
+      commentable.find('.list').append("<p data-comment-id='#{comment}'>#{comment.body} #{render_link_delete}</p>")
+    if data['id']
+      $("[data-comment-id=#{data.id}]").remove()
 
 unless $(document).on('ready', comment)
   $(document).on('turbolinks:load', comment)
