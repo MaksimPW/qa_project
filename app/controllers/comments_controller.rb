@@ -16,12 +16,13 @@ class CommentsController < ApplicationController
 
   def destroy
     @comment = Comment.find(params[:id])
-    if @comment.destroy!
+    if current_user.author_of? @comment
+      @comment.destroy!
       render json: { id: @comment.id }
       PrivatePub.publish_to '/comments', id: @comment.id, method: 'destroy'
+    else
+      render json: { error: "You can't remove not own comment" }, status: :forbidden
     end
-  rescue ActiveRecord::RecordNotFound
-    render json: { errors: 'Not found' }, status: :unprocessable_entity
   end
 
   private

@@ -68,6 +68,7 @@ RSpec.describe CommentsController, type: :controller do
   describe 'DELETE #destroy' do
     context 'question' do
       let!(:question_comment) { create(:comment, user: @user, commentable: question) }
+      let!(:other_comment) { create(:comment, commentable: question) }
 
       it 'author can delete his comment for Question' do
         expect { delete :destroy, id: question_comment, format: :json }.to change(question.comments, :count).by(-1)
@@ -77,22 +78,31 @@ RSpec.describe CommentsController, type: :controller do
         expect { delete :destroy, id: question_comment, format: :json }.to change(@user.comments, :count).by(-1)
       end
 
+      it 'author can\'t delete other comment for Comment' do
+        expect { delete :destroy, id: other_comment, format: :json }.to_not change(Comment, :count)
+      end
+
       it 'render json' do
         delete :destroy, id: question_comment, format: :json
         json = %({"id": #{question_comment.id}})
         expect(response.body).to be_json_eql json
       end
 
-      it 'render json errors' do
-        delete :destroy, id: question_comment, format: :json
-        delete :destroy, id: question_comment, format: :json
-        json = %({"errors": "Not found"})
+      it 'render error' do
+        delete :destroy, id: other_comment, format: :json
+        json = %({"error": "You can't remove not own comment"})
         expect(response.body).to be_json_eql json
+      end
+
+      it 'response 403 if error' do
+        delete :destroy, id: other_comment, format: :json
+        expect(response.status).to eq 403
       end
     end
 
     context 'answer' do
       let!(:answer_comment) { create(:comment, user: @user, commentable: answer) }
+      let!(:other_comment) { create(:comment, commentable: answer) }
 
       it 'author can delete his comment for Answer' do
         expect { delete :destroy, id: answer_comment, format: :json }.to change(answer.comments, :count).by(-1)
@@ -102,17 +112,25 @@ RSpec.describe CommentsController, type: :controller do
         expect { delete :destroy, id: answer_comment, format: :json }.to change(@user.comments, :count).by(-1)
       end
 
+      it 'author can\'t delete other comment for Comment' do
+        expect { delete :destroy, id: other_comment, format: :json }.to_not change(Comment, :count)
+      end
+
       it 'render json' do
         delete :destroy, id: answer_comment, format: :json
         json = %({"id": #{answer_comment.id}})
         expect(response.body).to be_json_eql json
       end
 
-      it 'render json errors' do
-        delete :destroy, id: answer_comment, format: :json
-        delete :destroy, id: answer_comment, format: :json
-        json = %({"errors": "Not found"})
+      it 'render error' do
+        delete :destroy, id: other_comment, format: :json
+        json = %({"error": "You can't remove not own comment"})
         expect(response.body).to be_json_eql json
+      end
+
+      it 'response 403 if error' do
+        delete :destroy, id: other_comment, format: :json
+        expect(response.status).to eq 403
       end
     end
   end
