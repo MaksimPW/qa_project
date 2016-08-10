@@ -8,7 +8,7 @@ class CommentsController < ApplicationController
 
     if @comment.save
       render json: { comment: @comment }
-      PrivatePub.publish_to '/comments', comment: @comment
+      PrivatePub.publish_to '/comments', comment: @comment, method: 'create'
     else
       render json: { errors: @comment.errors.full_messages.as_json }, status: :unprocessable_entity
     end
@@ -18,7 +18,7 @@ class CommentsController < ApplicationController
     @comment = Comment.find(params[:id])
     if @comment.destroy!
       render json: { id: @comment.id }
-      PrivatePub.publish_to '/comments', id: @comment.id
+      PrivatePub.publish_to '/comments', id: @comment.id, method: 'destroy'
     end
   rescue ActiveRecord::RecordNotFound
     render json: { errors: 'Not found' }, status: :unprocessable_entity

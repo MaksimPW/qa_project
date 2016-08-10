@@ -16,12 +16,14 @@ comment = ->
       $('.comments .new_comment .errors').append "<p>#{errors[message]}</p>"
 
   PrivatePub.subscribe "/comments", (data, channel) ->
-    if comment = (data['comment'])
-      commentable = $("[data-object-id='#{comment.commentable_id}'][data-object-type='#{comment.commentable_type.toLowerCase()}']")
-      render_link_delete = "<a data-remote='true' rel='nofollow' data-method='delete' href='/comments/#{data.comment}'>Delete</a>"
-      commentable.find('.list').append("<p data-comment-id='#{comment}'>#{comment.body} #{render_link_delete}</p>")
-    if data['id']
-      $("[data-comment-id=#{data.id}]").remove()
+    switch(data.method)
+      when 'create'
+        comment = (data['comment'])
+        commentable = $("[data-object-id='#{comment.commentable_id}'][data-object-type='#{comment.commentable_type.toLowerCase()}']")
+        render_link_delete = "<a data-remote='true' rel='nofollow' data-method='delete' href='/comments/#{data.comment}'>Delete</a>"
+        commentable.find('.list').append("<p data-comment-id='#{comment}'>#{comment.body} #{render_link_delete}</p>")
+      when 'destroy'
+        $("[data-comment-id=#{data.id}]").remove()
 
 unless $(document).on('ready', comment)
   $(document).on('turbolinks:load', comment)

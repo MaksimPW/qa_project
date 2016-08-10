@@ -26,7 +26,8 @@ RSpec.describe CommentsController, type: :controller do
 
       it 'render json' do
         post :create, question_id: question, comment: attributes_for(:comment), format: :json
-        # TODO: Add render json
+        json = JSON.parse(response.body)
+        expect(json).to be_truthy
       end
 
       it 'render json errors' do
@@ -52,7 +53,8 @@ RSpec.describe CommentsController, type: :controller do
 
       it 'render json' do
         post :create, answer_id: answer, comment: attributes_for(:comment), format: :json
-        # TODO: Add render json
+        json = JSON.parse(response.body)
+        expect(json).to be_truthy
       end
 
       it 'render json errors' do
