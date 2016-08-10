@@ -28,12 +28,8 @@ class CommentsController < ApplicationController
   private
 
   def load_commentable
-    @commentable_object =
-      if params[:question_id]
-        Question.find(params[:question_id])
-      elsif params[:answer_id]
-        Answer.find(params[:answer_id])
-      end
+    id = params.keys.detect { |k| k.to_s =~ /(question|answer)_id/ }
+    @commentable_object = $1.classify.constantize.find(params[id])
   end
 
   def comment_params
