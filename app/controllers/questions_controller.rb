@@ -4,8 +4,6 @@ class QuestionsController < ApplicationController
 
   include Voted
 
-  respond_to :js
-
   def index
     respond_with(@questions = Question.all)
   end

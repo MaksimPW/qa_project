@@ -5,8 +5,6 @@ class AnswersController < ApplicationController
 
   include Voted
 
-  respond_to :js
-
   def create
     @answer = @question.answers.new(answer_params)
     @answer.user = current_user
