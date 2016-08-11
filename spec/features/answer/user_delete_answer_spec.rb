@@ -19,7 +19,7 @@ feature 'User delete answer' do
     end
 
     expect(page).to_not have_content answer.body
-    expect(page).to have_content I18n.t('answers.delete.success')
+    expect(page).to have_content I18n.t('flash.actions.destroy.notice', resource_name: 'Answer')
   end
 
   scenario 'Author can`t deletes another author answers', js: true do

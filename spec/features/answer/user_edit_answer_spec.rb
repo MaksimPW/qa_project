@@ -19,7 +19,7 @@ feature 'Answer editing' do
         click_button I18n.t('helpers.submit.answer.update')
       end
 
-      expect(page).to have_content I18n.t('answers.update.success')
+      expect(page).to have_content I18n.t('flash.actions.update.notice', resource_name: 'Answer')
       expect(page).to have_content another_answer.body
       expect(page).to_not have_content answer.body
     end
