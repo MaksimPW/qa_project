@@ -4,49 +4,37 @@ class QuestionsController < ApplicationController
 
   include Voted
 
+  respond_to :js
+
   def index
-    @questions = Question.all
+    respond_with(@questions = Question.all)
   end
 
   def show
-    @answer = @question.answers.build
   end
 
   def new
-    @question = Question.new
+    respond_with(@question = Question.new)
   end
 
   def create
     @question = current_user.questions.new(question_params)
-
     if @question.save
       PrivatePub.publish_to '/questions', question: @question.to_json
-      redirect_to @question, notice: t('.success')
+      respond_with @question
     else
-      flash.now[:notice] = t('.fail')
       render :new
     end
   end
 
   def update
-    if current_user.author_of?(@question)
-      if @question.update(question_params)
-        flash.now[:notice] = t('.success')
-      else
-        flash.now[:notice] = t('.fail')
-      end
-    else
-      flash.now[:notice] = t('.fail')
-    end
+    @question.update(question_params) if current_user.author_of?(@question)
+    respond_with @question
   end
 
   def destroy
-    if current_user.author_of?(@question)
-      @question.destroy
-      redirect_to questions_path, notice: t('questions.delete.success')
-    else
-      render :show
-    end
+    return respond_with(@question.destroy!) if current_user.author_of?(@question)
+    render :show
   end
 
   private

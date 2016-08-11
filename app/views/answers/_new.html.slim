@@ -3,7 +3,7 @@
     div class='panel-heading'
       = t('.new_answer')
     .panel-body
-      = form_for [@question, @answer], remote: true do |f|
+      = form_for [@question, @question.answers.build], remote: true do |f|
         .errors
         .input-group
           = f.label :body

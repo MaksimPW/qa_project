@@ -42,8 +42,7 @@ en:
       edit: Edit question
       delete: Delete question
     create:
-      success: Question created successfully
-      fail: Create question failed
+      success: Question was successfully created
     update:
       success: Question was successfully updated
       fail: Question answer failed
