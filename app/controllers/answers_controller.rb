@@ -5,26 +5,17 @@ class AnswersController < ApplicationController
 
   include Voted
 
+  respond_to :js
+
   def create
     @answer = @question.answers.new(answer_params)
     @answer.user = current_user
-    if @answer.save
-      flash.now[:notice] = t('.success')
-    else
-      flash.now[:notice] = t('.fail')
-    end
+    respond_with @answer if @answer.save
   end
 
   def update
-    if current_user.author_of?(@answer)
-      if @answer.update(answer_params)
-        flash.now[:notice] = t('.success')
-      else
-        flash.now[:notice] = t('.fail')
-      end
-    else
-      flash.now[:notice] = t('.fail')
-    end
+    @answer.update(answer_params) if current_user.author_of?(@answer)
+    respond_with @answer
   end
 
   def best
@@ -34,9 +25,7 @@ class AnswersController < ApplicationController
   end
 
   def destroy
-    if current_user.author_of?(@answer)
-      flash[:notice] = t('answers.delete.success') if @answer.destroy
-    end
+    respond_with(@answer.destroy!) if current_user.author_of?(@answer)
   end
 
   private

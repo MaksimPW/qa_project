@@ -25,7 +25,6 @@ feature 'User create answer' do
 
       expect(page).to have_content 'Body is too short'
       expect(page).to have_content 'Body can\'t be blank'
-      expect(page).to have_content I18n.t('answers.create.fail')
     end
   end
 

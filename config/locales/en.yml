@@ -29,11 +29,9 @@ en:
     best:
       success: This answer was solved
     create:
-      success: Answer created successfully
-      fail: Create answer failed
+      success: Answer was successfully created
     update:
       success: Answer was successfully updated
-      fail: Update answer failed
     delete:
       success: Answer was successfully destroyed
   questions:
