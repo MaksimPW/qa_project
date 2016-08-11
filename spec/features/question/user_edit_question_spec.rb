@@ -19,7 +19,7 @@ feature 'Question editing' do
         click_button I18n.t('helpers.submit.question.update')
       end
 
-      expect(page).to have_content I18n.t('questions.update.success')
+      expect(page).to have_content I18n.t('flash.actions.update.notice', resource_name: 'Question')
 
       expect(page).to have_content another_question.title
       expect(page).to have_content another_question.body
@@ -36,7 +36,6 @@ feature 'Question editing' do
         click_button I18n.t('helpers.submit.question.update')
       end
 
-      expect(page).to have_content I18n.t('questions.update.fail')
       expect(page).to have_content 'Body can\'t be blank'
       expect(page).to have_content 'Body is too short'
 

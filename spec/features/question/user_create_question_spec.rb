@@ -15,7 +15,7 @@ feature 'User create question' do
       fill_in 'question_body', with: question.body
       click_button I18n.t('helpers.submit.question.create')
 
-      expect(page).to have_content I18n.t('questions.create.success')
+      expect(page).to have_content I18n.t('flash.actions.create.notice', resource_name: 'Question')
       expect(current_path).to match /\/questions\/\d+/
 
       expect(page).to have_content question.title
@@ -29,7 +29,6 @@ feature 'User create question' do
       expect(page).to have_content 'Title can\'t be blank'
       expect(page).to have_content 'Body is too short'
       expect(page).to have_content 'Body can\'t be blank'
-      expect(page).to have_content I18n.t('questions.create.fail')
       expect(current_path).to eq questions_path
     end
   end

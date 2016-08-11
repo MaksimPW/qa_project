@@ -23,7 +23,7 @@ comment = ->
         render_link_delete = "<a data-remote='true' rel='nofollow' data-method='delete' href='/comments/#{data.comment}'>Delete</a>"
         commentable.find('.list').append("<p data-comment-id='#{comment}'>#{comment.body} #{render_link_delete}</p>")
       when 'destroy'
-        $("[data-comment-id=#{data.id}]").remove()
+        $("[data-comment-id=#{data.comment.id}]").remove()
 
 unless $(document).on('ready', comment)
   $(document).on('turbolinks:load', comment)

@@ -29,12 +29,6 @@ RSpec.describe CommentsController, type: :controller do
         json = JSON.parse(response.body)
         expect(json).to be_truthy
       end
-
-      it 'render json errors' do
-        post :create, question_id: question, comment: attributes_for(:invalid_comment), format: :json
-        json = %({"errors": ["Body can't be blank", "Body is too short (minimum is 15 characters)"]})
-        expect(response.body).to be_json_eql json
-      end
     end
 
     context 'answer' do
@@ -55,12 +49,6 @@ RSpec.describe CommentsController, type: :controller do
         post :create, answer_id: answer, comment: attributes_for(:comment), format: :json
         json = JSON.parse(response.body)
         expect(json).to be_truthy
-      end
-
-      it 'render json errors' do
-        post :create, answer_id: answer, comment: attributes_for(:invalid_comment), format: :json
-        json = %({"errors": ["Body can't be blank", "Body is too short (minimum is 15 characters)"]})
-        expect(response.body).to be_json_eql json
       end
     end
   end
@@ -84,14 +72,7 @@ RSpec.describe CommentsController, type: :controller do
 
       it 'render json' do
         delete :destroy, id: question_comment, format: :json
-        json = %({"id": #{question_comment.id}})
-        expect(response.body).to be_json_eql json
-      end
-
-      it 'render error' do
-        delete :destroy, id: other_comment, format: :json
-        json = %({"error": "You can't remove not own comment"})
-        expect(response.body).to be_json_eql json
+        expect(response.body).to be_empty
       end
 
       it 'response 403 if error' do
@@ -118,14 +99,7 @@ RSpec.describe CommentsController, type: :controller do
 
       it 'render json' do
         delete :destroy, id: answer_comment, format: :json
-        json = %({"id": #{answer_comment.id}})
-        expect(response.body).to be_json_eql json
-      end
-
-      it 'render error' do
-        delete :destroy, id: other_comment, format: :json
-        json = %({"error": "You can't remove not own comment"})
-        expect(response.body).to be_json_eql json
+        expect(response.body).to be_empty
       end
 
       it 'response 403 if error' do

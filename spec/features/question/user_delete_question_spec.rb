@@ -13,7 +13,7 @@ feature 'User delete question' do
 
     expect(current_path).to eq questions_path
     expect(page).to_not have_content question.title
-    expect(page).to have_content I18n.t('questions.delete.success')
+    expect(page).to have_content I18n.t('flash.actions.destroy.notice', resource_name: 'Question')
   end
 
   scenario 'Author can`t deletes another author question' do

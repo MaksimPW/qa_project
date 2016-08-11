@@ -37,7 +37,7 @@ feature 'User can comment question' do
         click_button 'Create Comment'
       end
 
-      expect(page).to have_content 'Body can\'t be blank'
+      expect(page).to have_content 'can\'t be blank'
       expect(page).to_not have_content replica_comment.body
     end
 

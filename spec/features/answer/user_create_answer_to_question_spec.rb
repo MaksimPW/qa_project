@@ -16,7 +16,7 @@ feature 'User create answer' do
       click_button I18n.t('helpers.submit.answer.create')
 
       expect(current_path).to eq question_path(question)
-      expect(page).to have_content I18n.t('answers.create.success')
+      expect(page).to have_content I18n.t('flash.actions.create.notice', resource_name: 'Answer')
       expect(page).to have_content answer.body
     end
 
@@ -25,7 +25,6 @@ feature 'User create answer' do
 
       expect(page).to have_content 'Body is too short'
       expect(page).to have_content 'Body can\'t be blank'
-      expect(page).to have_content I18n.t('answers.create.fail')
     end
   end
 

@@ -28,30 +28,14 @@ en:
       best: Best!
     best:
       success: This answer was solved
-    create:
-      success: Answer created successfully
-      fail: Create answer failed
-    update:
-      success: Answer was successfully updated
-      fail: Update answer failed
-    delete:
-      success: Answer was successfully destroyed
   questions:
     question:
       attachments: Attachments
       edit: Edit question
       delete: Delete question
-    create:
-      success: Question created successfully
-      fail: Create question failed
-    update:
-      success: Question was successfully updated
-      fail: Question answer failed
     index:
       h1: Listing questions
       create_question: Create question
-    delete:
-      success: Question was successfully destroyed
     show:
       new_answer: New answer
       answers_list: Answers

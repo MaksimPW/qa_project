@@ -5,7 +5,7 @@
   - if current_user
     p= link_to 'Add Comment', '#', class: 'add-comment-link', data: { commentable_id: object.id, commentable_type: object.class.to_s.downcase }
     = form_for [object, Comment.new], remote: true,
-               html: { id: "new-comment-#{object.class.to_s.downcase}-#{object.id}" } do |f|
+               html: { id: "new-comment-#{object.class.to_s.downcase}-#{object.id}", 'data-type': 'json' } do |f|
       .errors
       .input-group
         = f.label :body
