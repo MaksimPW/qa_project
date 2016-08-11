@@ -1,6 +1,7 @@
 class CommentsController < ApplicationController
   before_action :authenticate_user!
   before_action :load_commentable, only: :create
+  before_action :load_comment, only: :destroy
 
   def create
     @comment = @commentable_object.comments.new(comment_params)
@@ -15,7 +16,6 @@ class CommentsController < ApplicationController
   end
 
   def destroy
-    @comment = Comment.find(params[:id])
     if current_user.author_of? @comment
       @comment.destroy!
       render json: { id: @comment.id }
@@ -26,6 +26,10 @@ class CommentsController < ApplicationController
   end
 
   private
+
+  def load_comment
+    @comment = Comment.find(params[:id])
+  end
 
   def load_commentable
     id = params.keys.detect { |k| k.to_s =~ /(question|answer)_id/ }
