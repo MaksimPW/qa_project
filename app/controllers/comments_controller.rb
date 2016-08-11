@@ -2,26 +2,20 @@ class CommentsController < ApplicationController
   before_action :authenticate_user!
   before_action :load_commentable, only: :create
   before_action :load_comment, only: :destroy
+  after_action :publish_pub, only: [:create, :destroy]
+
+  respond_to :json
 
   def create
-    @comment = @commentable_object.comments.new(comment_params)
-    @comment.user = current_user
-
-    if @comment.save
-      render json: { comment: @comment }
-      PrivatePub.publish_to '/comments', comment: @comment, method: 'create'
-    else
-      render json: { errors: @comment.errors.full_messages.as_json }, status: :unprocessable_entity
-    end
+    @comment = @commentable_object.comments.create(body: comment_params[:body], user: current_user)
+    respond_with @comment
   end
 
   def destroy
     if current_user.author_of? @comment
-      @comment.destroy!
-      render json: { id: @comment.id }
-      PrivatePub.publish_to '/comments', id: @comment.id, method: 'destroy'
+      respond_with(@comment.destroy!)
     else
-      render json: { error: "You can't remove not own comment" }, status: :forbidden
+      render json: { id: @comment.id }, status: :forbidden
     end
   end
 
@@ -38,5 +32,9 @@ class CommentsController < ApplicationController
 
   def comment_params
     params.require(:comment).permit(:body)
+  end
+
+  def publish_pub
+    PrivatePub.publish_to '/comments', comment: @comment, method: self.action_name
   end
 end

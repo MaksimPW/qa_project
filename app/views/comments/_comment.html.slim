@@ -3,4 +3,4 @@
     = comment.body
     '
     - if current_user && current_user.author_of?(comment)
-      = link_to 'Delete', comment, method: :delete, remote: true
+      = link_to 'Delete', comment_path(comment, format: :json), method: :delete, remote: true
