@@ -22,4 +22,5 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :authorizations, only: [:new, :create]
 end
