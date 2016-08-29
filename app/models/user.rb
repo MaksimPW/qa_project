@@ -20,17 +20,17 @@ class User < ActiveRecord::Base
   end
 
   def self.find_for_oauth(auth)
-    authorization = Authorization.where(provider: auth.provider, uid: auth.uid.to_s).first
+    authorization = Authorization.where(provider: auth[:provider], uid: auth[:uid].to_s).first
     return authorization.user if authorization
 
-    email = auth.info[:email]
+    email = auth[:info][:email]
     user = User.where(email: email).first
     if user
-      user.authorizations.create(provider: auth.provider, uid: auth.uid)
+      user.authorizations.create(provider: auth[:provider], uid: auth[:uid].to_s)
     else
       password = Devise.friendly_token[0, 16]
       user = User.create!(email: email, password: password, password_confirmation: password)
-      user.authorizations.create(provider: auth.provider, uid: auth.uid)
+      user.authorizations.create(provider: auth[:provider], uid: auth[:uid].to_s)
     end
     user
   end
