@@ -1,7 +1,10 @@
 class OmniauthCallbacksController < Devise::OmniauthCallbacksController
-  before_action :auth, only: [:facebook]
+  before_action :auth, only: [:facebook, :twitter]
 
   def facebook
+  end
+
+  def twitter
   end
 
   protected
