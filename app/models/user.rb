@@ -27,11 +27,11 @@ class User < ActiveRecord::Base
     email = auth[:info][:email]
     user = User.where(email: email).first
     if user
-      user.authorizations.create(provider: auth[:provider], uid: auth[:uid].to_s)
+      user.authorizations.create!(provider: auth[:provider], uid: auth[:uid].to_s)
     else
       password = Devise.friendly_token[0, 16]
       user = User.create!(email: email, password: password, password_confirmation: password)
-      user.authorizations.create(provider: auth[:provider], uid: auth[:uid].to_s)
+      user.authorizations.create!(provider: auth[:provider], uid: auth[:uid].to_s)
     end
     user
   end

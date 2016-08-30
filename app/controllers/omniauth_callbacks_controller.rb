@@ -1,5 +1,5 @@
 class OmniauthCallbacksController < Devise::OmniauthCallbacksController
-  before_action :auth, only: [:facebook, :twitter]
+  before_action :auth
 
   def facebook
   end
@@ -16,7 +16,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
       sign_in_and_redirect @user, event: :authentication
       set_flash_message(:notice, :success, kind: action_name.capitalize) if is_navigational_format?
     else
-      session[:omniauth] = auth_hash.except('extra')
+      session['omniauth'] = auth_hash.except('extra')
       redirect_to new_authorization_path
     end
   end
