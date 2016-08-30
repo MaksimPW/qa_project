@@ -72,14 +72,8 @@ RSpec.describe AnswersController, type: :controller do
         another_answer.reload
         expect(another_answer.body).to_not eq answer_updated_body
       end
-
-      it 'render update template' do
-        patch :update, id: another_answer, question_id: question, answer: { body: answer_updated_body }, format: :js
-        expect(response).to render_template :update
-      end
     end
   end
-
 
   describe 'POST #best' do
     sign_in_user
@@ -140,11 +134,6 @@ RSpec.describe AnswersController, type: :controller do
       it 'does not deletes another answer' do
         another_answer
         expect { delete :destroy, id: another_answer, question_id: question, format: :js }.to_not change(Answer, :count)
-      end
-
-      it 'render destroy template' do
-        delete :destroy, id: another_answer, question_id: question, format: :js
-        expect(response).to render_template :destroy
       end
     end
   end

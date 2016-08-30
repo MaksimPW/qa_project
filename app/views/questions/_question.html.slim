@@ -9,7 +9,7 @@ div class='panel panel-default'
       - @question.attachments.each do |a|
         li= link_to a.file.identifier, a.file.url
   div class='panel-footer'
-    - if user_signed_in? && current_user.author_of?(@question)
+    - if policy(@question).update?
       p= link_to t('.edit'), '#', class: 'edit-question-link', data: { question_id: @question.id }
       div class='question-errors'
       = form_for @question, remote: true, html: {id: "edit-question-#{@question.id}"} do |f|

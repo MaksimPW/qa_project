@@ -1,4 +1,4 @@
-- if user_signed_in?
+- if policy(Answer.new).new?
   div class='panel panel-info'
     div class='panel-heading'
       = t('.new_answer')

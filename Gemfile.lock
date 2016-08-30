@@ -177,6 +177,8 @@ GEM
       websocket-driver (>= 0.2.0)
     private_pub (1.0.3)
       faye
+    pundit (1.1.0)
+      activesupport (>= 3.0.0)
     rack (1.6.4)
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -312,6 +314,7 @@ DEPENDENCIES
   pg (~> 0.15)
   poltergeist
   private_pub
+  pundit
   rails (= 4.2.5)
   rails-i18n
   remotipart
