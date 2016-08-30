@@ -8,15 +8,13 @@ class CommentsController < ApplicationController
 
   def create
     @comment = @commentable_object.comments.create(body: comment_params[:body], user: current_user)
+    authorize @comment
     respond_with @comment
   end
 
   def destroy
-    if current_user.author_of? @comment
-      respond_with(@comment.destroy!)
-    else
-      render json: { id: @comment.id }, status: :forbidden
-    end
+    authorize @comment
+    respond_with(@comment.destroy!)
   end
 
   private

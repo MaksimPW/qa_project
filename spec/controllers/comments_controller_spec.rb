@@ -74,11 +74,6 @@ RSpec.describe CommentsController, type: :controller do
         delete :destroy, id: question_comment, format: :json
         expect(response.body).to be_empty
       end
-
-      it 'response 403 if error' do
-        delete :destroy, id: other_comment, format: :json
-        expect(response.status).to eq 403
-      end
     end
 
     context 'answer' do
@@ -100,11 +95,6 @@ RSpec.describe CommentsController, type: :controller do
       it 'render json' do
         delete :destroy, id: answer_comment, format: :json
         expect(response.body).to be_empty
-      end
-
-      it 'response 403 if error' do
-        delete :destroy, id: other_comment, format: :json
-        expect(response.status).to eq 403
       end
     end
   end
