@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  devise_for :users
+  devise_for :users, controllers: { omniauth_callbacks: 'omniauth_callbacks' }
   root 'questions#index'
 
   concern :votable do
@@ -22,4 +22,5 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :authorizations, only: [:new, :create]
 end
