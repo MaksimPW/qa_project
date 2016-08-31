@@ -10,14 +10,14 @@ class AnswerPolicy < ApplicationPolicy
   end
 
   def update?
-    user && user == record.user
+    user && user.author_of?(record)
   end
 
   def best?
-    user.present? && (record.user != user) && (record.question.user == user )
+    user.present? && !(user.author_of?(record)) && (user.author_of?(record.question))
   end
 
   def destroy?
-    user && user == record.user
+    user && user.author_of?(record)
   end
 end

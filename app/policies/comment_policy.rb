@@ -14,6 +14,6 @@ class CommentPolicy < ApplicationPolicy
   end
 
   def destroy?
-    user && user == record.user
+    user && user.author_of?(record)
   end
 end
