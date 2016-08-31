@@ -14,7 +14,7 @@ class AnswerPolicy < ApplicationPolicy
   end
 
   def best?
-    user.present? && !(user.author_of?(record)) && (user.author_of?(record.question))
+    user.present? && !user.author_of?(record) && user.author_of?(record.question)
   end
 
   def destroy?
