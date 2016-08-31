@@ -74,6 +74,11 @@ RSpec.describe CommentsController, type: :controller do
         delete :destroy, id: question_comment, format: :json
         expect(response.body).to be_empty
       end
+
+      it 'render alert flash message if error' do
+        delete :destroy, id: other_comment, format: :json
+        expect(flash[:alert]).to be_truthy
+      end
     end
 
     context 'answer' do
@@ -95,6 +100,11 @@ RSpec.describe CommentsController, type: :controller do
       it 'render json' do
         delete :destroy, id: answer_comment, format: :json
         expect(response.body).to be_empty
+      end
+
+      it 'render alert flash message if error' do
+        delete :destroy, id: other_comment, format: :json
+        expect(flash[:alert]).to be_truthy
       end
     end
   end
