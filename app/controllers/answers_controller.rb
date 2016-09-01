@@ -8,22 +8,24 @@ class AnswersController < ApplicationController
   def create
     @answer = @question.answers.new(answer_params)
     @answer.user = current_user
+    authorize @answer
     respond_with @answer if @answer.save
   end
 
   def update
-    @answer.update(answer_params) if current_user.author_of?(@answer)
+    authorize @answer
+    @answer.update(answer_params)
     respond_with @answer
   end
 
   def best
-    if current_user.author_of?(@question)
-      flash.now[:notice] = t('.success') if @answer.is_best!
-    end
+    authorize @answer
+    flash.now[:notice] = t('.success') if @answer.is_best!
   end
 
   def destroy
-    respond_with(@answer.destroy!) if current_user.author_of?(@answer)
+    authorize @answer
+    respond_with(@answer.destroy!)
   end
 
   private

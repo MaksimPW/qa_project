@@ -104,11 +104,6 @@ RSpec.describe QuestionsController, type: :controller do
         expect(another_question.title).to_not eq updated_title
         expect(another_question.body).to_not eq updated_body
       end
-
-      it 'render update template' do
-        patch :update, id: another_question, question: { title: updated_title, body: updated_body }, format: :js
-        expect(response).to render_template :update
-      end
     end
   end
 
@@ -135,11 +130,6 @@ RSpec.describe QuestionsController, type: :controller do
       it 'does not deletes another question' do
         another_question
         expect { delete :destroy, id: another_question }.to_not change(Question, :count)
-      end
-
-      it 're-renders current question' do
-        delete :destroy, id: another_question
-        expect(response).to render_template :show
       end
     end
   end

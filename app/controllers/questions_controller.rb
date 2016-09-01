@@ -5,18 +5,21 @@ class QuestionsController < ApplicationController
   include Voted
 
   def index
-    respond_with(@questions = Question.all)
+    authorize @questions = Question.all
+    respond_with @questions
   end
 
   def show
   end
 
   def new
-    respond_with(@question = Question.new)
+    authorize @question = Question.new
+    respond_with @question
   end
 
   def create
     @question = current_user.questions.new(question_params)
+    authorize @question
     if @question.save
       PrivatePub.publish_to '/questions', question: @question.to_json
       respond_with @question
@@ -26,12 +29,12 @@ class QuestionsController < ApplicationController
   end
 
   def update
-    @question.update(question_params) if current_user.author_of?(@question)
+    @question.update(question_params)
     respond_with @question
   end
 
   def destroy
-    return respond_with(@question.destroy!) if current_user.author_of?(@question)
+    return respond_with(@question.destroy!)
     render :show
   end
 
@@ -43,5 +46,6 @@ class QuestionsController < ApplicationController
 
   def load_question
     @question = Question.find(params[:id])
+    authorize @question
   end
 end

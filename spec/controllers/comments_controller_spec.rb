@@ -75,9 +75,9 @@ RSpec.describe CommentsController, type: :controller do
         expect(response.body).to be_empty
       end
 
-      it 'response 403 if error' do
+      it 'render alert flash message if error' do
         delete :destroy, id: other_comment, format: :json
-        expect(response.status).to eq 403
+        expect(flash[:alert]).to be_truthy
       end
     end
 
@@ -102,9 +102,9 @@ RSpec.describe CommentsController, type: :controller do
         expect(response.body).to be_empty
       end
 
-      it 'response 403 if error' do
+      it 'render alert flash message if error' do
         delete :destroy, id: other_comment, format: :json
-        expect(response.status).to eq 403
+        expect(flash[:alert]).to be_truthy
       end
     end
   end
