@@ -59,6 +59,7 @@ describe 'Questions API' do
   describe 'GET /show' do
     let!(:comment) { create(:comment, commentable: question) }
     let!(:attachment) { create(:attachment, attachable: question) }
+    let!(:attachment_answer) { create(:attachment, attachable: answer) }
 
     context 'unauth' do
       it 'returns 401 status if there is no access_token' do
@@ -83,9 +84,25 @@ describe 'Questions API' do
         expect(response.body).to be_json_eql(question.attachments.first.file.url.to_json).at_path("attachments_url/0/")
       end
 
-      %w(id body title created_at updated_at comments answers).each do |attr|
+      %w(id body title created_at updated_at comments).each do |attr|
         it "question object contains #{attr}" do
           expect(response.body).to be_json_eql(question.send(attr.to_sym).to_json).at_path("#{attr}")
+        end
+      end
+
+      context 'answers' do
+        it 'included in question object' do
+          expect(response.body).to have_json_size(1).at_path("answers")
+        end
+
+        %w(id body created_at updated_at).each do |attr|
+          it "answer object contains #{attr}" do
+            expect(response.body).to be_json_eql(answer.send(attr.to_sym).to_json).at_path("answers/0/#{attr}")
+          end
+        end
+
+        it 'answer object contains attachment url' do
+          expect(response.body).to be_json_eql(answer.attachments.first.file.url.to_json).at_path("answers/0/attachments_url/0/")
         end
       end
     end
