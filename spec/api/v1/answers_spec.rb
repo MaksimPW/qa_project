@@ -1,10 +1,11 @@
 require 'rails_helper'
 
 describe 'Answers API' do
+  let(:me) { create(:user) }
+  let(:access_token) { create(:access_token, resource_owner_id: me.id) }
   let!(:question) { create(:question) }
   let!(:answers) { create_list(:answer, 4, question: question) }
   let(:answer) { answers.first }
-  let(:access_token) { create(:access_token) }
   let!(:attachment) { create(:attachment, attachable: answer) }
 
   describe 'GET /index' do

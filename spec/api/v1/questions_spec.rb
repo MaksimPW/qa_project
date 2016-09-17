@@ -1,7 +1,8 @@
 require 'rails_helper'
 
 describe 'Questions API' do
-  let(:access_token) { create(:access_token) }
+  let(:me) { create(:user) }
+  let(:access_token) { create(:access_token, resource_owner_id: me.id) }
   let!(:questions) { create_list(:question, 2) }
   let(:question) { questions.first }
   let!(:answer) { create(:answer, question: question) }
