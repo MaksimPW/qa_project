@@ -1,6 +1,11 @@
 require 'rails_helper'
 
 describe 'Questions API' do
+  let(:access_token) { create(:access_token) }
+  let!(:questions) { create_list(:question, 2) }
+  let(:question) { questions.first }
+  let!(:answer) { create(:answer, question: question) }
+
   describe 'GET /index' do
     context 'unauth' do
       it 'returns 401 status if there is no access_token' do
@@ -15,10 +20,6 @@ describe 'Questions API' do
     end
 
     context 'auth' do
-      let(:access_token) { create(:access_token) }
-      let!(:questions) { create_list(:question, 2) }
-      let(:question) { questions.first }
-      let!(:answer) { create(:answer, question: question) }
 
       before { get '/api/v1/questions', format: :json, access_token: access_token.token }
 
@@ -55,12 +56,8 @@ describe 'Questions API' do
   end
 
   describe 'GET /show' do
-    let(:access_token) { create(:access_token) }
-    let!(:question) { create :question }
-    let!(:answer) { create(:answer, question: question) }
     let!(:comment) { create(:comment, commentable: question) }
     let!(:attachment) { create(:attachment, attachable: question) }
-
 
     context 'unauth' do
       it 'returns 401 status if there is no access_token' do
@@ -88,6 +85,51 @@ describe 'Questions API' do
       %w(id body title created_at updated_at comments answers).each do |attr|
         it "question object contains #{attr}" do
           expect(response.body).to be_json_eql(question.send(attr.to_sym).to_json).at_path("#{attr}")
+        end
+      end
+    end
+  end
+
+  describe 'POST /create' do
+    context 'unauth' do
+      it 'returns 401 status if there is no access_token' do
+        post '/api/v1/questions', format: :json
+        expect(response.status).to eq 401
+      end
+
+      it 'returns 401 status if access token is invalid' do
+        post '/api/v1/questions', format: :json, access_token: '1234'
+        expect(response.status).to eq 401
+      end
+    end
+
+    context 'auth' do
+      it 'returns 200 status code' do
+        post '/api/v1/questions', question: attributes_for(:question), access_token: access_token.token, format: :json
+        expect(response).to be_success
+      end
+
+      context 'with valid attributes' do
+        it 'saves the new question in the database' do
+          expect { post '/api/v1/questions', question: attributes_for(:question), access_token: access_token.token, format: :json }.to change(Question, :count).by(1)
+        end
+
+        %w(id body title created_at updated_at user_id).each do |attr|
+          it "question object contains #{attr}" do
+            post '/api/v1/questions', format: :json, access_token: access_token.token, question: attributes_for(:question)
+            expect(response.body).to be_json_eql(assigns(:question).send(attr.to_sym).to_json).at_path("#{attr}")
+          end
+        end
+      end
+
+      context 'with invalid attributes' do
+        it 'does not save the question in the database' do
+          expect { post '/api/v1/questions', question: attributes_for(:invalid_question), access_token: access_token.token, format: :json }.to_not change(Question, :count)
+        end
+
+        it 'response contains errors' do
+          post '/api/v1/questions', format: :json, access_token: access_token.token, question: attributes_for(:invalid_question)
+          expect(response.body).to have_json_path("errors")
         end
       end
     end
