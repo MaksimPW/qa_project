@@ -1,7 +1,7 @@
 class Api::V1::QuestionsController < Api::V1::ApplicationController
   def index
+    authorize Question
     @questions = Question.all
-    authorize @questions
     respond_with @questions
   end
 

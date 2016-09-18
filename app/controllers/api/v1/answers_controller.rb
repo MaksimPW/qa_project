@@ -1,8 +1,8 @@
 class Api::V1::AnswersController < Api::V1::ApplicationController
   def index
+    authorize Answer
     @question = Question.find(params[:question_id])
     @answers = @question.answers
-    authorize @answers
     respond_with @answers
   end
 
