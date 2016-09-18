@@ -1,4 +1,4 @@
-class Api::V1::AnswersController < Api::V1::ApplicationController
+class Api::V1::AnswersController < Api::V1::BaseController
   def index
     authorize Answer
     @question = Question.find(params[:question_id])
