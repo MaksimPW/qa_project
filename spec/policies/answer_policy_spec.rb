@@ -11,6 +11,15 @@ RSpec.describe AnswerPolicy do
 
   subject { described_class }
 
+  permissions :index? do
+    it 'grants access if authenticated user' do
+      expect(subject).to permit(user, answer)
+    end
+
+    it 'grants access if user is guest' do
+      expect(subject).to permit(guest, answer)
+    end
+  end
   permissions :create? do
     it 'grants access if authenticated user' do
       expect(subject).to permit(user, answer)
