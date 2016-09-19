@@ -8,6 +8,7 @@ describe 'Answers API' do
   let(:answer) { answers.first }
   let(:object) { answer }
   let!(:attachment) { create(:attachment, attachable: answer) }
+  let(:json_path) { '' }
 
   describe 'GET /index' do
     it_behaves_like "API Authenticable"
@@ -34,7 +35,6 @@ describe 'Answers API' do
     it_behaves_like "API Authenticable"
 
     context 'auth' do
-      let(:json_path) { '' }
 
       it 'answer object contains attachment url' do
         do_request(access_token: access_token.token)
@@ -56,7 +56,6 @@ describe 'Answers API' do
 
     context 'auth' do
       let(:object) { assigns(:answer) }
-      let(:json_path) { '' }
 
       context 'with valid attributes' do
         it 'saves the new answer in the database' do

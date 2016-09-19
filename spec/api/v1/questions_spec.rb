@@ -7,6 +7,7 @@ describe 'Questions API' do
   let(:question) { questions.first }
   let(:object) { question }
   let!(:answer) { create(:answer, question: question) }
+  let(:json_path) { '' }
 
   describe 'GET /index' do
     it_behaves_like "API Authenticable"
@@ -55,8 +56,6 @@ describe 'Questions API' do
     it_behaves_like "API Authenticable"
 
     context 'auth' do
-      let(:json_path) { '' }
-
       before { do_request(access_token: access_token.token) }
 
       it 'question object contains attachment url' do
@@ -95,7 +94,6 @@ describe 'Questions API' do
 
     context 'auth' do
       let(:object) { assigns(:question) }
-      let(:json_path) { '' }
 
       context 'with valid attributes' do
         it 'saves the new question in the database' do
