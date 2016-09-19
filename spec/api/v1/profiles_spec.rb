@@ -6,7 +6,7 @@ describe 'Profile API' do
   let(:object) { me }
 
   describe 'GET /me' do
-    it_behaves_like "API Authenticable"
+    it_behaves_like 'API Authenticable'
 
     context 'auth' do
       let(:json_path) { '' }
@@ -14,7 +14,7 @@ describe 'Profile API' do
       before { do_request(access_token: access_token.token) }
 
       %w(id email created_at updated_at).each do |attr|
-        it_behaves_like "API Checkable eq json attributes", attr
+        it_behaves_like 'API Checkable eq json attributes', attr
       end
 
       %w(password encrypted_password).each do |attr|
@@ -30,7 +30,7 @@ describe 'Profile API' do
   end
 
   describe 'GET /index' do
-    it_behaves_like "API Authenticable"
+    it_behaves_like 'API Authenticable'
 
     context 'auth' do
       let(:json_path) { '0/' }
@@ -44,7 +44,7 @@ describe 'Profile API' do
       end
 
       %w(id email created_at updated_at).each do |attr|
-        it_behaves_like "API Checkable eq json attributes", attr
+        it_behaves_like 'API Checkable eq json attributes', attr
       end
 
       %w(password encrypted_password).each do |attr|

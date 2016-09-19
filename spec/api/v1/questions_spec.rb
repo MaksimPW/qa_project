@@ -10,7 +10,7 @@ describe 'Questions API' do
   let(:json_path) { '' }
 
   describe 'GET /index' do
-    it_behaves_like "API Authenticable"
+    it_behaves_like 'API Authenticable'
 
     context 'auth' do
       let(:json_path) { '0/' }
@@ -22,7 +22,7 @@ describe 'Questions API' do
       end
 
       %w(id title body created_at updated_at).each do |attr|
-        it_behaves_like "API Checkable eq json attributes", attr
+        it_behaves_like 'API Checkable eq json attributes', attr
       end
 
       it 'question object contains short_title' do
@@ -38,7 +38,7 @@ describe 'Questions API' do
         end
 
         %w(id body created_at updated_at).each do |attr|
-          it_behaves_like "API Checkable eq json attributes", attr
+          it_behaves_like 'API Checkable eq json attributes', attr
         end
       end
     end
@@ -53,7 +53,7 @@ describe 'Questions API' do
     let!(:attachment) { create(:attachment, attachable: question) }
     let!(:attachment_answer) { create(:attachment, attachable: answer) }
 
-    it_behaves_like "API Authenticable"
+    it_behaves_like 'API Authenticable'
 
     context 'auth' do
       before { do_request(access_token: access_token.token) }
@@ -63,7 +63,7 @@ describe 'Questions API' do
       end
 
       %w(id body title created_at updated_at comments).each do |attr|
-        it_behaves_like "API Checkable eq json attributes", attr
+        it_behaves_like 'API Checkable eq json attributes', attr
       end
 
       context 'answers' do
@@ -75,7 +75,7 @@ describe 'Questions API' do
         end
 
         %w(id body created_at updated_at).each do |attr|
-          it_behaves_like "API Checkable eq json attributes", attr
+          it_behaves_like 'API Checkable eq json attributes', attr
         end
 
         it 'answer object contains attachment url' do
@@ -90,7 +90,7 @@ describe 'Questions API' do
   end
 
   describe 'POST /create' do
-    it_behaves_like "API Authenticable"
+    it_behaves_like 'API Authenticable'
 
     context 'auth' do
       let(:object) { assigns(:question) }
@@ -101,7 +101,7 @@ describe 'Questions API' do
         end
 
         %w(id body title created_at updated_at user_id).each do |attr|
-          it_behaves_like "API Checkable eq json attributes", attr
+          it_behaves_like 'API Checkable eq json attributes', attr
         end
       end
 

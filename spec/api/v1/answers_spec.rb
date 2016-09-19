@@ -11,7 +11,7 @@ describe 'Answers API' do
   let(:json_path) { '' }
 
   describe 'GET /index' do
-    it_behaves_like "API Authenticable"
+    it_behaves_like 'API Authenticable'
 
     context 'auth' do
       let(:json_path) { '0/' }
@@ -22,7 +22,7 @@ describe 'Answers API' do
       end
 
       %w(id body created_at updated_at question_id user_id best score).each do |attr|
-        it_behaves_like "API Checkable eq json attributes", attr
+        it_behaves_like 'API Checkable eq json attributes', attr
       end
     end
 
@@ -32,7 +32,7 @@ describe 'Answers API' do
   end
 
   describe 'GET /show' do
-    it_behaves_like "API Authenticable"
+    it_behaves_like 'API Authenticable'
 
     context 'auth' do
 
@@ -42,7 +42,7 @@ describe 'Answers API' do
       end
 
       %w(id body created_at updated_at question_id user_id best score comments).each do |attr|
-        it_behaves_like "API Checkable eq json attributes", attr
+        it_behaves_like 'API Checkable eq json attributes', attr
       end
     end
 
@@ -52,7 +52,7 @@ describe 'Answers API' do
   end
 
   describe 'POST /create' do
-    it_behaves_like "API Authenticable"
+    it_behaves_like 'API Authenticable'
 
     context 'auth' do
       let(:object) { assigns(:answer) }
@@ -63,7 +63,7 @@ describe 'Answers API' do
         end
 
         %w(id body created_at updated_at question_id user_id best score).each do |attr|
-          it_behaves_like "API Checkable eq json attributes", attr
+          it_behaves_like 'API Checkable eq json attributes', attr
         end
       end
 
