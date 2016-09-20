@@ -16,3 +16,25 @@ shared_examples_for 'Renderable templates' do |template|
     expect(response).to render_template template
   end
 end
+
+shared_examples_for 'Renderable json true' do
+  it 'render json true' do
+    do_request
+    json = JSON.parse(response.body)
+    expect(json).to be_truthy
+  end
+end
+
+shared_examples_for 'Renderable json empty' do
+  it 'render json empty' do
+    do_request
+    expect(response.body).to be_empty
+  end
+end
+
+shared_examples_for 'Renderable alert flash message' do
+  it 'render alert flash message if error' do
+    do_request
+    expect(flash[:alert]).to be_truthy
+  end
+end
