@@ -12,8 +12,9 @@ feature 'User can perform file operations when he edit answer', js: true do
     click_on I18n.t('answers.answer.edit')
   end
 
-  let(:objects_css) { '.answers' }
-  let(:object_css) { "#answer_#{answer.id}" }
-  let(:model) { 'answer' }
+  given(:objects_css) { '.answers' }
+  given(:object_css) { "#answer_#{answer.id}" }
+  given(:model) { 'answer' }
+
   it_behaves_like 'Able file operations for edit'
 end

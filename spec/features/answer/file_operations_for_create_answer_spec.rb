@@ -12,8 +12,9 @@ feature 'User can perform file operations when he create answer' do
     click_on I18n.t('cocoon.defaults.add')
   end
 
-  let(:new_object_css) { '#new_answer' }
-  let(:object_css) { '.answers' }
-  let(:model) { 'answer' }
+  given(:new_object_css) { '#new_answer' }
+  given(:object_css) { '.answers' }
+  given(:model) { 'answer' }
+
   it_behaves_like 'Able file operations for create'
 end

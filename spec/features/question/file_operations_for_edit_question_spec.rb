@@ -11,8 +11,9 @@ feature 'User can perform file operations when he edit question', js: true do
     click_on I18n.t('questions.question.edit')
   end
 
-  let(:objects_css) { '.question' }
-  let(:object_css) { '.question' }
-  let(:model) { 'question' }
+  given(:objects_css) { '.question' }
+  given(:object_css) { '.question' }
+  given(:model) { 'question' }
+
   it_behaves_like 'Able file operations for edit'
 end
