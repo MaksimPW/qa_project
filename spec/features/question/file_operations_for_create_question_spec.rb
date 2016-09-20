@@ -15,5 +15,5 @@ feature 'User can perform file operations when he create question', js: true do
   let(:new_object_css) { '#new_question' }
   let(:object_css) { '.question' }
   let(:model) { 'question' }
-  it_behaves_like 'Able file operations'
+  it_behaves_like 'Able file operations for create'
 end

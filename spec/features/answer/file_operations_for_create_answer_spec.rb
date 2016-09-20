@@ -15,5 +15,5 @@ feature 'User can perform file operations when he create answer' do
   let(:new_object_css) { '#new_answer' }
   let(:object_css) { '.answers' }
   let(:model) { 'answer' }
-  it_behaves_like 'Able file operations'
+  it_behaves_like 'Able file operations for create'
 end

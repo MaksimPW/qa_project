@@ -12,28 +12,8 @@ feature 'User can perform file operations when he edit answer', js: true do
     click_on I18n.t('answers.answer.edit')
   end
 
-  scenario 'Removes file of answer', js: true do
-    within '.answers' do
-      click_on I18n.t('cocoon.defaults.remove')
-      click_on I18n.t('helpers.submit.answer.update')
-    end
-
-    expect(page).to_not have_link attachment.file.identifier
-  end
-
-  scenario 'See current files', js: true do
-    within '.attachment-file' do
-      expect(page).to have_content attachment.file.identifier
-      expect(page).to have_link I18n.t('cocoon.defaults.remove')
-    end
-  end
-
-  scenario 'Adds file', js: true do
-    within "#answer_#{answer.id}" do
-      click_on I18n.t('cocoon.defaults.add')
-      attach_file('File', "#{Rails.root}/spec/rails_helper.rb")
-      click_on I18n.t('helpers.submit.answer.update')
-      expect(page).to have_xpath("//a[contains(.,'rails_helper.rb')]")
-    end
-  end
+  let(:objects_css) { '.answers' }
+  let(:object_css) { "#answer_#{answer.id}" }
+  let(:model) { 'answer' }
+  it_behaves_like 'Able file operations for edit'
 end
