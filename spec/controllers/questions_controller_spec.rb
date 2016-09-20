@@ -5,68 +5,64 @@ RSpec.describe QuestionsController, type: :controller do
 
   describe 'GET #index' do
     let(:questions) { create_list(:question, 2)}
+    let(:do_request) { get :index }
 
-    before { get :index }
+    before { do_request }
 
     it 'populates an array of all questions' do
       expect(assigns(:questions)).to match_array(questions)
     end
 
-    it 'renders index view' do
-      expect(response).to render_template :index
-    end
+    it_behaves_like 'Renderable templates', :index
   end
 
   describe 'GET #show' do
-    let (:question) { create(:question) }
+    let(:question) { create(:question) }
+    let(:do_request) { get :show, id: question }
 
-    before { get :show, id: question }
+    before { do_request }
 
     it 'assigns the requested question to @question' do
       expect(assigns(:question)).to eq question
     end
 
-    it 'renders show view' do
-      expect(response).to render_template :show
-    end
+    it_behaves_like 'Renderable templates', :show
   end
 
   describe 'GET #new' do
     sign_in_user
-    before { get :new }
+    let(:do_request) { get :new }
+
+    before { do_request }
 
     it 'assigns a new Question to @question' do
       expect(assigns(:question)).to be_a_new(Question)
     end
 
-    it 'renders new view' do
-      expect(response).to render_template :new
-    end
+    it_behaves_like 'Renderable templates', :new
   end
 
   describe 'POST #create' do
     sign_in_user
 
     context 'with valid attributes' do
-      it 'saves the new question in the database' do
-        expect { post :create, question: attributes_for(:question) }.to change(@user.questions, :count).by(1)
-      end
+      let(:do_request) { post :create, question: attributes_for(:question) }
+      let(:model) { @user.questions }
+
+      it_behaves_like 'Changeable table size', 1
 
       it 'redirects to show view' do
-        post :create, question: attributes_for(:question)
+        do_request
         expect(response).to redirect_to question_path(assigns(:question))
       end
     end
 
     context 'with invalid attributes' do
-      it 'does not save the question in the database' do
-        expect { post :create, question: attributes_for(:invalid_question) }.to_not change(Question, :count)
-      end
+      let(:do_request) { post :create, question: attributes_for(:invalid_question) }
+      let(:model) { Question }
 
-      it 're-renders view' do
-        post :create, question: attributes_for(:invalid_question)
-        expect(response).to render_template :new
-      end
+      it_behaves_like 'Does not changeable table size'
+      it_behaves_like 'Renderable templates', :new
     end
   end
 
@@ -84,17 +80,16 @@ RSpec.describe QuestionsController, type: :controller do
         expect(assigns(:question)).to eq question
       end
 
+      let(:do_request) { patch :update, id: question, question: { title: updated_title ,body: updated_body }, format: :js }
+
       it 'changes question attributes' do
-        patch :update, id: question, question: { title: updated_title ,body: updated_body }, format: :js
+        do_request
         question.reload
         expect(question.title).to eq updated_title
         expect(question.body).to eq updated_body
       end
 
-      it 'render update template' do
-        patch :update, id: question, question: { title: updated_title, body: updated_body }, format: :js
-        expect(response).to render_template :update
-      end
+      it_behaves_like 'Renderable templates', :update
     end
 
     context 'Author can`t deletes another author question' do
@@ -110,27 +105,25 @@ RSpec.describe QuestionsController, type: :controller do
   describe 'DELETE #destroy' do
     sign_in_user
 
-    let(:question) { create(:question, user: @user) }
-
     context 'Author deletes own question' do
-      it 'deletes question' do
-        question
-        expect { delete :destroy, id: question }.to change(@user.questions, :count).by(-1)
-      end
+      let!(:question) { create(:question, user: @user) }
+      let(:do_request) { delete :destroy, id: question }
+      let(:model) { @user.questions }
+
+      it_behaves_like 'Changeable table size', -1
 
       it 'redirects to index view' do
-        delete :destroy, id: question
+        do_request
         expect(response).to redirect_to questions_path
       end
     end
 
     context 'Author can\`t deletes another author question' do
-      let(:another_question) { create(:question) }
+      let!(:another_question) { create(:question) }
+      let(:do_request) { delete :destroy, id: another_question }
+      let(:model) { Question }
 
-      it 'does not deletes another question' do
-        another_question
-        expect { delete :destroy, id: another_question }.to_not change(Question, :count)
-      end
+      it_behaves_like 'Does not changeable table size'
     end
   end
 end
