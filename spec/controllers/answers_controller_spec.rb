@@ -7,31 +7,25 @@ RSpec.describe AnswersController, type: :controller do
     sign_in_user
 
     let(:question) { create(:question) }
+    let(:model) { question.answers }
 
     context 'with valid attributes' do
-      it 'saves the new answer in the database for Question' do
-        expect { post :create, question_id: question, answer: attributes_for(:answer), format: :js }.to change(question.answers, :count).by(1)
-      end
+      let(:do_request) { post :create, answer: attributes_for(:answer), question_id: question, format: :js }
 
-      it 'saves the new answer in the database for User' do
-        expect { post :create, question_id: question, answer: attributes_for(:answer), format: :js }.to change(@user.answers, :count).by(1)
-      end
+      it_behaves_like 'Changeable table size', 1
 
-      it 'render create template' do
-        post :create, question_id: question, answer: attributes_for(:answer), format: :js
-        expect(response).to render_template :create
-      end
+      let(:model) { @user.answers }
+      it_behaves_like 'Changeable table size', 1
+
+      it_behaves_like 'Renderable templates', :create
     end
 
     context 'with invalid attributes' do
-      it 'does not save the answer' do
-        expect { post :create, question_id: question, answer: attributes_for(:invalid_answer), format: :js }.to_not change(question.answers, :count)
-        end
+      let(:do_request) { post :create, answer: attributes_for(:invalid_answer), question_id: question, format: :js }
+      let(:model) { question.answers }
 
-      it 'render create template' do
-        post :create, question_id: question, answer: attributes_for(:invalid_answer), format: :js
-        expect(response).to render_template :create
-      end
+      it_behaves_like 'Does not changeable table size'
+      it_behaves_like 'Renderable templates', :create
     end
   end
 
@@ -44,31 +38,32 @@ RSpec.describe AnswersController, type: :controller do
     let(:another_answer) { create(:answer, question: question) }
 
     context 'Author updates own answer' do
+      let(:do_request) { patch :update, id: answer, answer: attributes_for(:answer), question_id: question, format: :js }
+
       it 'assigns the requested answer to @answer' do
-        patch :update, id: answer, question_id: question, answer: attributes_for(:answer), format: :js
+        do_request
         expect(assigns(:answer)).to eq answer
       end
 
       it 'assigns the question' do
-        patch :update, id: answer, question_id: question, answer: attributes_for(:answer), format: :js
+        do_request
         expect(assigns(:question)).to eq question
       end
 
+      let(:do_request) { patch :update, id: answer, answer: { body: answer_updated_body }, question_id: question, format: :js }
+
       it 'changes answer attributes' do
-        patch :update, id: answer, question_id: question, answer: { body: answer_updated_body }, format: :js
+        do_request
         answer.reload
         expect(answer.body).to eq answer_updated_body
       end
 
-      it 'render update template' do
-        patch :update, id: answer, question_id: question, answer: { body: answer_updated_body }, format: :js
-        expect(response).to render_template :update
-      end
+      it_behaves_like 'Renderable templates', :update
     end
 
     context 'Author can`t updates another answer' do
       it 'does not updates another answer' do
-        patch :update, id: another_answer, question_id: question, answer: { body: answer_updated_body }, format: :js
+        patch :update, id: another_answer, answer: { body: answer_updated_body }, question_id: question, format: :js
         another_answer.reload
         expect(another_answer.body).to_not eq answer_updated_body
       end
@@ -84,22 +79,21 @@ RSpec.describe AnswersController, type: :controller do
     let(:another_answer) { create(:answer, question: create(:question)) }
 
     context 'Author of question can set best answer' do
+      let(:do_request) { patch :best, id: answer.id, question_id: question, format: :js }
+
       it 'set best answer is true' do
-        patch :best, id: answer.id, question_id: question, format: :js
+        do_request
         answer.reload
         expect(answer.best).to be_truthy
       end
 
       it 'question can not have a lot of best answers' do
-        patch :best, id: answer.id, question_id: question, format: :js
+        do_request
         first_best_answer.reload
         expect(first_best_answer.best).to be_falsey
       end
 
-      it 'render best template' do
-        patch :best, id: answer.id, question_id: question, format: :js
-        expect(response).to render_template :best
-      end
+      it_behaves_like 'Renderable templates', :best
     end
 
     context 'Author can`t set best answer for another question' do
@@ -115,26 +109,20 @@ RSpec.describe AnswersController, type: :controller do
     sign_in_user
 
     let(:question) { create(:question) }
-    let(:answer) { create(:answer, user: @user, question: question) }
-    let(:another_answer) { create(:answer, question: question) }
+    let!(:answer) { create(:answer, user: @user, question: question) }
+    let!(:another_answer) { create(:answer, question: question) }
+    let(:model) { Answer }
 
     context 'Author deletes own answer' do
-      it 'deletes answer' do
-        answer
-        expect { delete :destroy, id: answer, question_id: question, format: :js }.to change(Answer, :count).by(-1)
-      end
+      let(:do_request) { delete :destroy, id: answer, question_id: question, format: :js }
 
-      it 'render destroy template' do
-        delete :destroy, id: answer, question_id: question, format: :js
-        expect(response).to render_template :destroy
-      end
+      it_behaves_like 'Changeable table size', -1
+      it_behaves_like 'Renderable templates', :destroy
     end
 
     context 'Author can`t deletes another answer' do
-      it 'does not deletes another answer' do
-        another_answer
-        expect { delete :destroy, id: another_answer, question_id: question, format: :js }.to_not change(Answer, :count)
-      end
+      let(:do_request) { delete :destroy, id: another_answer, question_id: question, format: :js }
+      it_behaves_like 'Does not changeable table size'
     end
   end
 end
