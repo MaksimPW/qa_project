@@ -50,6 +50,7 @@ RSpec.describe QuestionsController, type: :controller do
       let(:model) { @user.questions }
 
       it_behaves_like 'Changeable table size', 1
+      it_behaves_like 'Able PrivatePub'
 
       it 'redirects to show view' do
         do_request
@@ -63,6 +64,7 @@ RSpec.describe QuestionsController, type: :controller do
 
       it_behaves_like 'Does not changeable table size'
       it_behaves_like 'Renderable templates', :new
+      it_behaves_like 'Disable PrivatePub'
     end
   end
 

@@ -24,6 +24,7 @@ RSpec.describe CommentsController, type: :controller do
       let(:model) { @user.comments }
       it_behaves_like 'Changeable table size', 1
       it_behaves_like 'Renderable json true'
+      it_behaves_like 'Able PrivatePub'
     end
 
     context 'answer' do
@@ -40,6 +41,7 @@ RSpec.describe CommentsController, type: :controller do
       let(:model) { @user.comments }
       it_behaves_like 'Changeable table size', 1
       it_behaves_like 'Renderable json true'
+      it_behaves_like 'Able PrivatePub'
     end
   end
 
@@ -56,12 +58,14 @@ RSpec.describe CommentsController, type: :controller do
 
       let(:model) { question.comments }
       it_behaves_like 'Changeable table size', -1
+      it_behaves_like 'Able PrivatePub'
 
       context 'other comment' do
         let(:do_request) { delete :destroy, id: other_comment, format: :json }
         let(:model) { Comment }
         it_behaves_like 'Does not changeable table size'
         it_behaves_like 'Renderable alert flash message'
+        it_behaves_like 'Disable PrivatePub'
       end
 
     end
@@ -78,12 +82,14 @@ RSpec.describe CommentsController, type: :controller do
 
       let(:model) { answer.comments }
       it_behaves_like 'Changeable table size', -1
+      it_behaves_like 'Able PrivatePub'
 
       context 'other comment' do
         let(:do_request) { delete :destroy, id: other_comment, format: :json }
         let(:model) { Comment }
         it_behaves_like 'Does not changeable table size'
         it_behaves_like 'Renderable alert flash message'
+        it_behaves_like 'Disable PrivatePub'
       end
     end
   end
