@@ -11,45 +11,37 @@ RSpec.describe CommentsController, type: :controller do
 
   describe 'POST #create' do
     context 'question' do
+      let(:do_request) { post :create, question_id: question, comment: attributes_for(:comment), format: :json }
+
       it 'assigns to @question' do
-        post :create, question_id: question, comment: attributes_for(:comment), format: :json
+        do_request
         expect(assigns(:commentable_object)).to eq question
       end
 
-      it 'saves the new comment in the database for Question' do
-        expect { post :create, question_id: question, comment: attributes_for(:comment), format: :json }.to change(question.comments, :count).by(1)
-      end
+      let(:model) { question.comments }
+      it_behaves_like 'Changeable table size', 1
 
-      it 'saves the new comment in the database for User' do
-        expect { post :create, question_id: question, comment: attributes_for(:comment), format: :json }.to change(@user.comments, :count).by(1)
-      end
-
-      it 'render json' do
-        post :create, question_id: question, comment: attributes_for(:comment), format: :json
-        json = JSON.parse(response.body)
-        expect(json).to be_truthy
-      end
+      let(:model) { @user.comments }
+      it_behaves_like 'Changeable table size', 1
+      it_behaves_like 'Renderable json true'
+      it_behaves_like 'Able PrivatePub'
     end
 
     context 'answer' do
+      let(:do_request) { post :create, answer_id: answer, comment: attributes_for(:comment), format: :json }
+
       it 'assigns to @answer' do
-        post :create, answer_id: answer, comment: attributes_for(:comment), format: :json
+        do_request
         expect(assigns(:commentable_object)).to eq answer
       end
 
-      it 'saves the new comment in the database for Answer' do
-        expect { post :create, answer_id: answer, comment: attributes_for(:comment), format: :json }.to change(answer.comments, :count).by(1)
-      end
+      let(:model) { answer.comments }
+      it_behaves_like 'Changeable table size', 1
 
-      it 'saves the new comment in the database for User' do
-        expect { post :create, answer_id: answer, comment: attributes_for(:comment), format: :json }.to change(@user.comments, :count).by(1)
-      end
-
-      it 'render json' do
-        post :create, answer_id: answer, comment: attributes_for(:comment), format: :json
-        json = JSON.parse(response.body)
-        expect(json).to be_truthy
-      end
+      let(:model) { @user.comments }
+      it_behaves_like 'Changeable table size', 1
+      it_behaves_like 'Renderable json true'
+      it_behaves_like 'Able PrivatePub'
     end
   end
 
@@ -57,54 +49,47 @@ RSpec.describe CommentsController, type: :controller do
     context 'question' do
       let!(:question_comment) { create(:comment, user: @user, commentable: question) }
       let!(:other_comment) { create(:comment, commentable: question) }
+      let(:do_request) { delete :destroy, id: question_comment, format: :json }
 
-      it 'author can delete his comment for Question' do
-        expect { delete :destroy, id: question_comment, format: :json }.to change(question.comments, :count).by(-1)
+      it_behaves_like 'Renderable json empty'
+
+      let(:model) { @user.comments }
+      it_behaves_like 'Changeable table size', -1
+
+      let(:model) { question.comments }
+      it_behaves_like 'Changeable table size', -1
+      it_behaves_like 'Able PrivatePub'
+
+      context 'other comment' do
+        let(:do_request) { delete :destroy, id: other_comment, format: :json }
+        let(:model) { Comment }
+        it_behaves_like 'Does not changeable table size'
+        it_behaves_like 'Renderable alert flash message'
+        it_behaves_like 'Disable PrivatePub'
       end
 
-      it 'author can delete his comment for User' do
-        expect { delete :destroy, id: question_comment, format: :json }.to change(@user.comments, :count).by(-1)
-      end
-
-      it 'author can\'t delete other comment for Comment' do
-        expect { delete :destroy, id: other_comment, format: :json }.to_not change(Comment, :count)
-      end
-
-      it 'render json' do
-        delete :destroy, id: question_comment, format: :json
-        expect(response.body).to be_empty
-      end
-
-      it 'render alert flash message if error' do
-        delete :destroy, id: other_comment, format: :json
-        expect(flash[:alert]).to be_truthy
-      end
     end
 
     context 'answer' do
       let!(:answer_comment) { create(:comment, user: @user, commentable: answer) }
       let!(:other_comment) { create(:comment, commentable: answer) }
+      let(:do_request) { delete :destroy, id: answer_comment, format: :json }
 
-      it 'author can delete his comment for Answer' do
-        expect { delete :destroy, id: answer_comment, format: :json }.to change(answer.comments, :count).by(-1)
-      end
+      it_behaves_like 'Renderable json empty'
 
-      it 'author can delete his comment for User' do
-        expect { delete :destroy, id: answer_comment, format: :json }.to change(@user.comments, :count).by(-1)
-      end
+      let(:model) { @user.comments }
+      it_behaves_like 'Changeable table size', -1
 
-      it 'author can\'t delete other comment for Comment' do
-        expect { delete :destroy, id: other_comment, format: :json }.to_not change(Comment, :count)
-      end
+      let(:model) { answer.comments }
+      it_behaves_like 'Changeable table size', -1
+      it_behaves_like 'Able PrivatePub'
 
-      it 'render json' do
-        delete :destroy, id: answer_comment, format: :json
-        expect(response.body).to be_empty
-      end
-
-      it 'render alert flash message if error' do
-        delete :destroy, id: other_comment, format: :json
-        expect(flash[:alert]).to be_truthy
+      context 'other comment' do
+        let(:do_request) { delete :destroy, id: other_comment, format: :json }
+        let(:model) { Comment }
+        it_behaves_like 'Does not changeable table size'
+        it_behaves_like 'Renderable alert flash message'
+        it_behaves_like 'Disable PrivatePub'
       end
     end
   end
