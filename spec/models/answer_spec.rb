@@ -28,4 +28,15 @@ RSpec.describe Answer, type: :model do
       expect(best_answer).to_not be_best
     end
   end
+
+  describe '.question_notification' do
+    let!(:user) { create(:user) }
+    let!(:question) { create(:question, user: user) }
+    let(:answer) { build(:answer, question: question) }
+
+    it 'should receive' do
+      expect(answer).to receive(:question_notification)
+      answer.save
+    end
+  end
 end

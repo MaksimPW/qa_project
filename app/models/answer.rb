@@ -6,6 +6,8 @@ class Answer < ActiveRecord::Base
   belongs_to :question
   has_many :attachments, as: :attachable
 
+  after_create :question_notification
+
   validates :user_id, presence: true
   validates :question_id, presence: true
 
@@ -21,5 +23,11 @@ class Answer < ActiveRecord::Base
       self.question.answers.where(best: true).update_all(best: false)
       update! best: true
     end
+  end
+
+  private
+
+  def question_notification
+    NotificationNewAnswerForQuestionJob.perform_later(self)
   end
 end
