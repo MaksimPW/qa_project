@@ -15,7 +15,7 @@ RSpec.describe Answer, type: :model do
   it_behaves_like 'user_votable'
   it_behaves_like 'user_commentable'
 
-  describe 'is_best!' do
+  describe '#is_best!' do
     let!(:question) { create(:question) }
     let!(:answer) { create(:answer, question: question) }
     let!(:best_answer) { create(:answer, best: true, question: question) }
@@ -29,7 +29,7 @@ RSpec.describe Answer, type: :model do
     end
   end
 
-  describe '.question_notification' do
+  describe '#question_notification' do
     let!(:user) { create(:user) }
     let!(:question) { create(:question, user: user) }
     let(:answer) { build(:answer, question: question) }
