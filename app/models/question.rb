@@ -17,6 +17,8 @@ class Question < ActiveRecord::Base
 
   accepts_nested_attributes_for :attachments, reject_if: :all_blank, allow_destroy: true
 
+  scope :daily, -> { where('created_at > ?', 1.day.ago) }
+
   after_create do
     subscribe!(self.user)
   end
