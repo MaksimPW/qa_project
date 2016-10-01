@@ -15,7 +15,7 @@ RSpec.describe Answer, type: :model do
   it_behaves_like 'user_votable'
   it_behaves_like 'user_commentable'
 
-  describe 'is_best!' do
+  describe '#is_best!' do
     let!(:question) { create(:question) }
     let!(:answer) { create(:answer, question: question) }
     let!(:best_answer) { create(:answer, best: true, question: question) }
@@ -26,6 +26,17 @@ RSpec.describe Answer, type: :model do
       answer.is_best!
       best_answer.reload
       expect(best_answer).to_not be_best
+    end
+  end
+
+  describe '#question_notification' do
+    let!(:user) { create(:user) }
+    let!(:question) { create(:question, user: user) }
+    let(:answer) { build(:answer, question: question) }
+
+    it 'should receive' do
+      expect(answer).to receive(:question_notification)
+      answer.save
     end
   end
 end
