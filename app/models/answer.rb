@@ -28,6 +28,6 @@ class Answer < ActiveRecord::Base
   private
 
   def question_notification
-    NotificationNewAnswerForQuestionJob.perform_later(self)
+    NotificationNewAnswerJob.perform_later(self)
   end
 end

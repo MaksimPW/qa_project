@@ -1,4 +1,4 @@
-class NotificationNewAnswerForQuestionJob < ActiveJob::Base
+class NotificationNewAnswerJob < ActiveJob::Base
   queue_as :default
 
   def perform(answer)
