@@ -4,6 +4,7 @@ class Question < ActiveRecord::Base
 
   belongs_to :user
   has_many :answers, dependent: :destroy
+  has_many :subscriptions, dependent: :destroy
   has_many :attachments, as: :attachable
 
   validates :user_id, presence: true
@@ -15,4 +16,16 @@ class Question < ActiveRecord::Base
                    length: { minimum: 30 }
 
   accepts_nested_attributes_for :attachments, reject_if: :all_blank, allow_destroy: true
+
+  after_create do
+    subscribe!(self.user)
+  end
+
+  def subscribed?(current_user)
+    self.subscriptions.exists?(user: current_user)
+  end
+
+  def subscribe!(current_user)
+    self.subscriptions.create(user: current_user) unless subscribed?(current_user)
+  end
 end

@@ -5,7 +5,7 @@ RSpec.describe NotificationMailer, type: :mailer do
     let!(:user) { create(:user) }
     let!(:question) { create(:question, user: user) }
     let(:answer) { build(:answer, question: question) }
-    let(:mail) { NotificationMailer.new_answer_for_question(answer) }
+    let(:mail) { NotificationMailer.new_answer_for_question(answer, user) }
 
     it 'renders the headers' do
       expect(mail.subject).to eq('Notification')

@@ -39,6 +39,8 @@ Rails.application.routes.draw do
     resources :answers, only: [:create, :destroy, :update] do
       patch :best, on: :member
     end
+    post   '/subscribe'   => 'subscriptions#create'
+    delete '/unsubscribe' => 'subscriptions#destroy'
   end
 
   resources :authorizations, only: [:new, :create]

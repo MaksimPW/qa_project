@@ -8,7 +8,7 @@ RSpec.describe NotificationNewAnswerForQuestionJob, type: :job do
     let(:answer) { create(:answer, question: question) }
 
     it 'should send notification question mailer' do
-      expect(NotificationMailer).to receive(:new_answer_for_question).with(answer).and_call_original
+      expect(NotificationMailer).to receive(:new_answer_for_question).with(answer, user).and_call_original
 
       described_class.perform_now(answer)
     end
