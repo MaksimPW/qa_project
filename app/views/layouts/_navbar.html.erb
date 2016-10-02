@@ -4,6 +4,7 @@
       <%= link_to 'QA PROJECT', root_path, class: 'navbar-brand' %>
     </div>
     <ul class="nav navbar-nav navbar-right">
+      <li><%= link_to 'Search', search_path %></li>
       <% if user_signed_in? %>
           <li>
             <%= link_to('Sign out', destroy_user_session_path, :method => :delete) %>

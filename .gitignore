@@ -16,3 +16,6 @@ config/database.yml
 .idea
 /public/uploads/
 config/secrets.yml
+
+config/*.sphinx.conf
+db/sphinx

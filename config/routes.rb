@@ -44,4 +44,6 @@ Rails.application.routes.draw do
   end
 
   resources :authorizations, only: [:new, :create]
+
+  get '/search', to: 'search#search', as: 'search'
 end
