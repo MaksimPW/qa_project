@@ -17,6 +17,10 @@ RSpec.configure do |config|
     DatabaseCleaner.strategy = :truncation
   end
 
+  config.before(:each, sphinx: true) do
+    DatabaseCleaner.strategy = :deletion
+  end
+
   config.before(:each) do
     DatabaseCleaner.start
   end
@@ -24,6 +28,8 @@ RSpec.configure do |config|
   config.after(:each) do
     DatabaseCleaner.clean
   end
-end
 
-Capybara.javascript_driver = :poltergeist
+  config.append_after(:each) do
+    DatabaseCleaner.clean
+  end
+end
