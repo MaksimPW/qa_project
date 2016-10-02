@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe SearchController do
   describe 'GET #search' do
-    let(:do_request){ get :search, { query: 'test' } }
+    let(:do_request){ get :search, { query: 'test', model: 'All' } }
 
     it_behaves_like 'Renderable templates', :search
 
