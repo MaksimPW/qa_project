@@ -224,6 +224,8 @@ GEM
       faye
     pundit (1.1.0)
       activesupport (>= 3.0.0)
+    rabl (0.13.0)
+      activesupport (>= 2.3.14)
     rack (1.6.4)
     rack-protection (1.5.3)
       rack
@@ -401,6 +403,7 @@ DEPENDENCIES
   poltergeist
   private_pub
   pundit
+  rabl
   rails (= 4.2.5)
   rails-i18n
   remotipart
