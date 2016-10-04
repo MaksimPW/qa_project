@@ -91,3 +91,6 @@ group :development do
   gem 'capistrano3-unicorn', require: false
 end
 
+# Uncomment only for production
+# gem 'backup', group :production
+
