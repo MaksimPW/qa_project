@@ -3,7 +3,7 @@ class Answer < ActiveRecord::Base
   include UserCommentable
 
   belongs_to :user
-  belongs_to :question
+  belongs_to :question, touch: true
   has_many :attachments, as: :attachable
 
   after_create :question_notification

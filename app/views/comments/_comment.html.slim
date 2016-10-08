@@ -1,6 +1,7 @@
 - if comment.persisted? && policy(comment).show?
-  p data-comment-id="#{comment.id}"
-    = comment.body
-    '
-    - if policy(comment).destroy?
-      = link_to 'Delete', comment_path(comment, format: :json), method: :delete, remote: true
+  - cache comment do
+    p data-comment-id="#{comment.id}"
+      = comment.body
+      '
+      - if policy(comment).destroy?
+        = link_to 'Delete', comment_path(comment, format: :json), method: :delete, remote: true
